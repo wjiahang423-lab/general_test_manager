@@ -1,0 +1,85 @@
+name: 延时函数测试
+version: '1.0'
+description: ''
+global_params: {}
+variables:
+  result: false
+  SN: '0'
+variable_types:
+  result: Boolean
+  SN: String
+sequences:
+- name: 序列1
+  steps:
+  - name: 示例步骤
+    script: ''
+    function: run
+    params:
+      seconds: 1.0
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    type: delay
+  - name: 确认
+    script: ''
+    function: run
+    params:
+      message: 确认参数是否正确？
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    type: prompt
+  - name: 返回单独的SN字符串
+    script: acu/_session.py
+    function: get_sn
+    params:
+      params: ''
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: '{{SN}}'
+      unit: ''
+      message: ''
+    type: script
+teardown_sequence:
+  name: 后置序列
+  steps:
+  - name: 获取测试结果
+    script: acu/_session.py
+    function: get_all_test_result
+    params:
+      params: ''
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: '{{result}}'
+      unit: ''
+      message: ''
+    type: script
+  - name: 获取测试结果_复制
+    script: acu/_session.py
+    function: get_
+    params:
+      string: '{{SN}}'
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    type: script
