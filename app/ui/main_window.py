@@ -14,6 +14,7 @@ No login, no SN input, no mode selection.
 from __future__ import annotations
 
 import os
+import re
 from datetime import datetime
 
 from PyQt5.QtCore import Qt
@@ -25,13 +26,14 @@ from PyQt5.QtWidgets import (
     QScrollArea,
 )
 
-from app.config.settings import TEST_PLANS_DIR, TEST_SCRIPTS_DIR
+from app.config.settings import TEST_PLANS_DIR, TEST_SCRIPTS_DIR, REPORTS_DIR
 from app.engine.models import TestPlan, TestSequence, TestStep
 from app.engine.schema import load_plan, save_plan
 from app.engine.runner import TestRunner
+from app.engine.database import Database
 from app.ui.plan_tree import PlanTree
 from app.ui.step_editor import StepEditor
-from app.ui.run_panel import RunPanel
+from app.ui.run_panel_window import RunPanelWindow
 
 
 class MainWindow(QMainWindow):
@@ -43,7 +45,9 @@ class MainWindow(QMainWindow):
         self._current_path: str = ""
         self._dirty = False
         self._runner: TestRunner | None = None
-        self._panel_sizes: list[int] = [520, 280]   # saved before hiding run panel
+
+        self._run_panel_window = RunPanelWindow()
+        self._db = Database(os.path.join(REPORTS_DIR, "test_records.db"))
 
         self._build_menu()
         self._build_toolbar()
@@ -88,8 +92,10 @@ class MainWindow(QMainWindow):
         view_menu = mb.addMenu("视图(&V)")
         self._act_panel = QAction("📊  执行面板(&P)", self, shortcut="Ctrl+P")
         self._act_panel.setCheckable(True)
-        self._act_panel.setChecked(True)
-        self._act_panel.triggered.connect(self._toggle_run_panel)
+        self._act_panel.setChecked(False)
+        self._act_panel.triggered.connect(
+            lambda checked: self._run_panel_window.show() if checked else self._run_panel_window.hide()
+        )
         view_menu.addAction(self._act_panel)
 
         tool_menu = mb.addMenu("工具(&T)")
@@ -126,11 +132,7 @@ class MainWindow(QMainWindow):
         outer.setContentsMargins(4, 4, 4, 4)
         outer.setSpacing(4)
 
-        # Vertical splitter: editor area on top, run panel on bottom
-        v_split = QSplitter(Qt.Vertical)
-        self._v_split = v_split
-
-        # ---- editor area ----
+        # Horizontal splitter: PlanTree (left) | StepEditor (right)
         h_split = QSplitter(Qt.Horizontal)
 
         self._tree   = PlanTree()
@@ -143,18 +145,11 @@ class MainWindow(QMainWindow):
 
         h_split.addWidget(self._tree)
         h_split.addWidget(scroll)
-        h_split.setSizes([400, 600])
+        h_split.setSizes([400, 880])
         h_split.setStretchFactor(0, 1)
         h_split.setStretchFactor(1, 2)
 
-        v_split.addWidget(h_split)
-
-        # ---- run panel ----
-        self._run_panel = RunPanel()
-        v_split.addWidget(self._run_panel)
-        v_split.setSizes([520, 280])
-
-        outer.addWidget(v_split)
+        outer.addWidget(h_split)
 
         # Wire signals
         self._tree.sig_step_selected.connect(self._editor.load_step)
@@ -386,54 +381,52 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "提示", "已有任务正在运行。")
             return
 
-        self._run_panel.reset()
+        self._run_panel_window.reset()
+        self._run_panel_window.show()
+        self._act_panel.setChecked(True)
         self._tree.reset_run_markers()
         self._act_run.setEnabled(False)
         self._act_abort.setEnabled(True)
-        # Auto-show the run panel if hidden
-        if not self._run_panel.isVisible():
-            self._act_panel.setChecked(True)
-            self._toggle_run_panel(True)
 
         sn = datetime.now().strftime("RUN-%Y%m%d%H%M%S")
         self._runner = TestRunner(plan=plan, scripts_root=TEST_SCRIPTS_DIR, sn=sn)
         self._runner.sig_step_started.connect(self._on_step_started)
-        self._runner.sig_step_finished.connect(self._run_panel.on_step_finished)
+        self._runner.sig_step_finished.connect(self._run_panel_window.on_step_finished)
         self._runner.sig_step_finished.connect(self._tree.mark_step_result)
-        self._runner.sig_log.connect(self._run_panel.on_log)
+        self._runner.sig_log.connect(self._run_panel_window.on_log)
         self._runner.sig_done.connect(self._on_run_done)
         self._runner.sig_aborted.connect(self._on_run_aborted)
         self._runner.sig_prompt.connect(self._on_prompt)
         self._runner.start()
 
     def _on_step_started(self, name: str, index: int, total: int) -> None:
-        self._run_panel.on_step_started(name, index, total)
+        self._run_panel_window.on_step_started(name, index, total)
         self._tree.mark_step_running(name)
 
     def _on_run_done(self, record) -> None:
-        self._run_panel.on_done(record)
+        self._run_panel_window.on_done(record)
         self._act_run.setEnabled(True)
         self._act_abort.setEnabled(False)
+        # Save to DB and generate reports
+        try:
+            from app.utils.report_html import HtmlReportGenerator
+            from app.utils.report_excel import ExcelReportGenerator
+            record_id  = self._db.save_record(record)
+            html_path  = HtmlReportGenerator.generate(record)
+            xlsx_path  = ExcelReportGenerator.generate(record)
+            self._db.update_report_path(record_id, html_path)
+            self._run_panel_window.set_report_paths(html_path, xlsx_path)
+        except Exception as exc:
+            self._run_panel_window.on_log(f"[报告生成失败] {exc}")
 
     def _on_run_aborted(self, reason: str) -> None:
-        self._run_panel.on_aborted(reason)
+        self._run_panel_window.on_aborted(reason)
         self._act_run.setEnabled(True)
         self._act_abort.setEnabled(False)
 
     def _abort_run(self) -> None:
         if self._runner is not None:
             self._runner.request_abort()
-
-    def _toggle_run_panel(self, show: bool) -> None:
-        if show:
-            self._run_panel.setVisible(True)
-            self._v_split.setSizes(self._panel_sizes)
-        else:
-            # Save current sizes before hiding
-            sizes = self._v_split.sizes()
-            if sizes[1] > 0:
-                self._panel_sizes = sizes
-            self._run_panel.setVisible(False)
 
     def _on_prompt(self, message: str, params_json: str) -> None:
         reply = QMessageBox.question(

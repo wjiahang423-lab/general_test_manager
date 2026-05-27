@@ -39,11 +39,11 @@ if %errorlevel% neq 0 (
 
 :: ── 4. 清理旧产物 ────────────────────────────────────────────
 echo [步骤 3/4] 清理旧打包目录...
-if exist "dist\general_test_manager" (
-    rmdir /s /q "dist\general_test_manager"
+if exist "dist\ATETest" (
+    rmdir /s /q "dist\ATETest"
 )
-if exist "build\general_test_manager" (
-    rmdir /s /q "build\general_test_manager"
+if exist "build\ATETest" (
+    rmdir /s /q "build\ATETest"
 )
 
 :: ── 5. PyInstaller 打包 ──────────────────────────────────────
@@ -54,7 +54,7 @@ pyinstaller ^
     --noconfirm ^
     --onedir ^
     --windowed ^
-    --name "general_test_manager" ^
+    --name "ATETest" ^
     %ICON_ARG% ^
     --add-data "resources;resources" ^
     --add-data "test_plans;test_plans" ^
@@ -71,8 +71,8 @@ if %errorlevel% neq 0 goto :fail
 echo.
 echo ============================================================
 echo   打包成功！
-echo   输出目录: %~dp0dist\general_test_manager\
-echo   可执行文件: dist\general_test_manager\general_test_manager.exe
+echo   输出目录: %~dp0dist\ATETest\
+echo   可执行文件: dist\ATETest\ATETest.exe
 echo ============================================================
 echo.
 pause

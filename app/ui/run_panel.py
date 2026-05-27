@@ -90,10 +90,11 @@ class RunPanel(QWidget):
         outer.setContentsMargins(4, 2, 4, 4)
         outer.setSpacing(2)
 
-        # Thin status bar: overall result label
+        # Thin status bar: overall result label (fixed height, never expands)
         self._overall_label = QLabel("")
         self._overall_label.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
-        outer.addWidget(self._overall_label)
+        self._overall_label.setFixedHeight(28)
+        outer.addWidget(self._overall_label, 0)
 
         # Splitter: table | log
         splitter = QSplitter(Qt.Horizontal)
@@ -102,12 +103,20 @@ class RunPanel(QWidget):
         self._table = QTableWidget(0, 4)
         self._table.setHorizontalHeaderLabels(["步骤名称", "结果", "测量值", "信息"])
         hh = self._table.horizontalHeader()
-        hh.setSectionResizeMode(0, QHeaderView.Stretch)
-        hh.setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        hh.setSectionResizeMode(2, QHeaderView.ResizeToContents)
-        hh.setSectionResizeMode(3, QHeaderView.Stretch)
+        # Interactive: user can drag every column boundary freely
+        hh.setSectionResizeMode(QHeaderView.Interactive)
+        # Last column stretches to fill remaining space
+        hh.setStretchLastSection(True)
+        # Sensible initial column widths
+        self._table.setColumnWidth(0, 260)
+        self._table.setColumnWidth(1, 70)
+        self._table.setColumnWidth(2, 110)
+        # col 3 (信息) is stretched — no explicit width needed
+        self._table.verticalHeader().setVisible(False)
         self._table.setEditTriggers(QTableWidget.NoEditTriggers)
         self._table.setSelectionBehavior(QTableWidget.SelectRows)
+        self._table.setAlternatingRowColors(False)
+        # self._table.setMinimumWidth(200)
         splitter.addWidget(self._table)
 
         # Log
@@ -115,10 +124,14 @@ class RunPanel(QWidget):
         self._log.setReadOnly(True)
         self._log.setMaximumBlockCount(2000)
         self._log.setFont(QFont("Consolas", 10))
+        # self._log.setMinimumWidth(100)
         splitter.addWidget(self._log)
 
-        splitter.setSizes([500, 400])
-        outer.addWidget(splitter)
+        splitter.setSizes([1, 1])
+        splitter.setStretchFactor(0, 1)
+        splitter.setStretchFactor(1, 1)
+        splitter.setHandleWidth(6)
+        outer.addWidget(splitter, 1)  # stretch=1: splitter takes all remaining height
 
     # ------------------------------------------------------------------
     # Helpers
