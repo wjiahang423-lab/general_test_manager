@@ -145,7 +145,7 @@ class MainWindow(QMainWindow):
 
         h_split.addWidget(self._tree)
         h_split.addWidget(scroll)
-        h_split.setSizes([400, 880])
+        h_split.setSizes([800, 280])
         h_split.setStretchFactor(0, 1)
         h_split.setStretchFactor(1, 2)
 

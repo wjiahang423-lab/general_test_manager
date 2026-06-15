@@ -213,14 +213,106 @@ class TestRunner(QThread):
     # Loop step expansion
     # ------------------------------------------------------------------
 
+    def _load_excel_loop(self, xlsx_path: str, sheet_name: str) -> list:
+        """从 xlsx 文件读取指定 sheet，返回 是否测试==是 的行列表。
+        每行以 {列名: 值} 字典表示；自动将 '测试项名称' 映射为 'name'。
+        仅依赖标准库（zipfile + xml.etree），无需 openpyxl/pandas。
+        """
+        import zipfile
+        import xml.etree.ElementTree as ET
+        import re as _re
+
+        NS   = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+        NS_R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+
+        def _col_idx(ref):
+            letters = _re.sub(r"\d", "", ref)
+            n = 0
+            for ch in letters:
+                n = n * 26 + (ord(ch) - ord("A") + 1)
+            return n - 1
+
+        with zipfile.ZipFile(xlsx_path) as zf:
+            # shared strings
+            try:
+                ss_xml = ET.fromstring(zf.read("xl/sharedStrings.xml"))
+                shared = [
+                    "".join(t.text or "" for t in si.iter(f"{{{NS}}}t"))
+                    for si in ss_xml.iter(f"{{{NS}}}si")
+                ]
+            except Exception:
+                shared = []
+
+            # workbook → 找目标 sheet 路径
+            wb_xml  = ET.fromstring(zf.read("xl/workbook.xml"))
+            wb_rels = ET.fromstring(zf.read("xl/_rels/workbook.xml.rels"))
+            rid_map = {
+                r.get(f"{{{NS_R}}}id", r.get("Id")): r.get("Target")
+                for r in wb_rels
+            }
+            ws_path = None
+            for s in wb_xml.iter(f"{{{NS}}}sheet"):
+                if s.get("name") == sheet_name:
+                    rid     = s.get(f"{{{NS_R}}}id", s.get("r:id"))
+                    target  = rid_map.get(rid, "")
+                    ws_path = f"xl/{target}" if not target.startswith("xl/") else target
+                    break
+            if ws_path is None or ws_path not in zf.namelist():
+                raise ValueError(f"Sheet '{sheet_name}' 未在 {xlsx_path} 中找到")
+
+            ws_xml   = ET.fromstring(zf.read(ws_path))
+            all_rows = []
+            for row_el in ws_xml.iter(f"{{{NS}}}row"):
+                cells = {}
+                for c in row_el:
+                    ref  = c.get("r", "")
+                    cidx = _col_idx(ref)
+                    t    = c.get("t", "")
+                    v_el = c.find(f"{{{NS}}}v")
+                    if v_el is None:
+                        val = None
+                    elif t == "s":
+                        val = shared[int(v_el.text)] if v_el.text is not None else ""
+                    elif t == "b":
+                        val = bool(int(v_el.text))
+                    else:
+                        try:
+                            val = float(v_el.text)
+                            if val == int(val):
+                                val = int(val)
+                        except Exception:
+                            val = v_el.text
+                    cells[cidx] = val
+                if cells:
+                    mc = max(cells.keys()) + 1
+                    all_rows.append([cells.get(i) for i in range(mc)])
+
+        if not all_rows:
+            return []
+
+        headers = [str(c) if c is not None else "" for c in all_rows[0]]
+        items   = []
+        for row in all_rows[1:]:
+            d = {h: (row[i] if i < len(row) else None) for i, h in enumerate(headers)}
+            if str(d.get("是否测试", "")).strip() != "是":
+                continue
+            # runner 用 'name' 字段作步骤显示名
+            if "name" not in d:
+                d["name"] = d.get("测试项名称") or d.get("pin") or ""
+            items.append(d)
+        return items
+
     def _expand_loop_steps(self, seq, step):
         if step.step_type != "loop":
             return [(seq, step)]
         source_path = os.path.join(self._scripts_root, step.loop_source)
         try:
-            with open(source_path, "r", encoding="utf-8") as fh:
-                data = yaml.safe_load(fh)
-            items = data[step.loop_key]
+            if source_path.lower().endswith(".xlsx"):
+                items = self._load_excel_loop(source_path, step.loop_key)
+            else:
+                with open(source_path, "r", encoding="utf-8") as fh:
+                    data = yaml.safe_load(fh)
+                items = data[step.loop_key]
             if not isinstance(items, list) or len(items) == 0:
                 raise ValueError(f"loop_key '{step.loop_key}' 为空或非列表。")
         except Exception as exc:
