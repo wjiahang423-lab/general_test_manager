@@ -25,14 +25,10 @@ class DiagnosticProtocol:
 
             # 找到目标ID的消息
             if msg_id == self.recv_can_id and data:
-            #     print(f"收到{hex(msg_id)}回复: {[hex(x) for x in data]}")
-            # can_id, data, _ = self.pcan.read_specific_message( self.recv_can_id)
-
+                #     print(f"收到{hex(msg_id)}回复: {[hex(x) for x in data]}")
+                # can_id, data, _ = self.pcan.read_specific_message( self.recv_can_id)
 
                 return data
-
-
-
 
     def read_did(self, did_high: int, did_low: int) -> Optional[List[int]]:
 

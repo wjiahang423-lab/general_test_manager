@@ -32,7 +32,7 @@ def main() -> None:
     app.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     app.setApplicationName("通用测试管理工具")
     app.setWindowIcon(_app_icon())
-    app.setFont(QFont('Microsoft YaHei', 12))
+    app.setFont(QFont('Microsoft YaHei', 10))
 
     win = MainWindow()
     win.setWindowIcon(_app_icon())

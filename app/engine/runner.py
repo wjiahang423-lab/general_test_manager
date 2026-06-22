@@ -17,6 +17,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from app.engine.models import TestPlan, TestRecord, StepResult, TestStep, TestSequence, StepLimit
 from app.engine.sandbox import ScriptSandbox
 from app.engine.executor import StepExecutor
+from app.config.settings import SCRIPT_PYTHON
 
 
 class TestRunner(QThread):
@@ -87,7 +88,7 @@ class TestRunner(QThread):
             else:
                 variable_store[name] = val
 
-        sandbox = ScriptSandbox(self._scripts_root)
+        sandbox = ScriptSandbox(self._scripts_root, python_exe=SCRIPT_PYTHON)
         self._executor = StepExecutor(
             sandbox=sandbox,
             on_prompt=self._handle_prompt,

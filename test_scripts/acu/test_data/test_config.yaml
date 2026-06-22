@@ -10,7 +10,7 @@ can_ids:
   dig_send: 0x7F1
   dig_recv: 0x7F9
 file_paths:
-  a2l_file: "D:/wy_wangbo/WorkSpace/Work/ACU/测试脚本/python/ACUTestProjectByPytest/acu_eol_test/test_data/ACU_GEN_20260311_142701.A2L"
+  a2l_file: "D:/wy_wangbo/WorkSpace/Work/ACU/Release/3.7/ACU_GEN_20260616_184356.A2L"
   pts_excel: "test_data/wm_ACU生产测试规范V1.6.xlsx"
   pts_excel_output: "reports/_test_report.xlsx"
   test_report: "reports/test_report.txt"

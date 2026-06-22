@@ -43,5 +43,8 @@ def Kl15_close():
     relay_control(CMD_CLOSE_RELAY1)
 
 
-Kl30_open()
-Kl15_open()
+# Kl30_open()
+# Kl15_open()
+
+Kl15_close()
+Kl30_close()

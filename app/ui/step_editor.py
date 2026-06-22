@@ -152,7 +152,7 @@ class StepEditor(QWidget):
 
         self._ret_label = QLabel("")
         self._ret_label.setWordWrap(True)
-        self._ret_label.setStyleSheet("color: #555; font-size: 11px;")
+        self._ret_label.setStyleSheet("color: #555; font-size: 9px;")
         form.addRow(QLabel("返回类型："), self._ret_label)
 
         self._timeout_spin = QDoubleSpinBox()
@@ -197,7 +197,7 @@ class StepEditor(QWidget):
         loop_form.addRow(QLabel("数据文件："), loop_src_widget)
         self._loop_key_edit = QLineEdit()
         self._loop_key_edit.setPlaceholderText("YAML 顶层 key")
-        loop_form.addRow(QLabel("数据 key："), self._loop_key_edit)
+        loop_form.addRow(QLabel("数据key/sheetName："), self._loop_key_edit)
         self._loop_item_type_combo = QComboBox()
         self._loop_item_type_combo.addItems(["measurement", "script"])
         loop_form.addRow(QLabel("展开步骤类型："), self._loop_item_type_combo)
@@ -504,7 +504,7 @@ class StepEditor(QWidget):
 
     def _browse_loop_source(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
-            self, "选择循环数据文件", TEST_SCRIPTS_DIR, "YAML 文件 (*.yaml *.yml)"
+            self, "选择循环数据文件", TEST_SCRIPTS_DIR, "YAML 文件或 xlsx (*.yaml *.yml *.xlsx)"
         )
         if path:
             try:

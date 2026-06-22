@@ -89,6 +89,7 @@ sequences:
     breakpoint: false
     return_map: {}
     type: delay
+  skip: true
 - name: 点火回路阻值（24 路）
   steps:
   - name: 点火回路阻值
@@ -176,6 +177,7 @@ sequences:
     loop_key: smi970
     loop_item_type: measurement
     type: loop
+  skip: true
 - name: SMA720 与 SMA760 检测
   steps:
   - name: SMA760 传感器有效性检测
@@ -214,6 +216,7 @@ sequences:
     loop_key: SMA720
     loop_item_type: script
     type: loop
+  skip: true
 - name: ADC 测量（9 项）
   steps:
   - name: ADC 测量
@@ -233,6 +236,7 @@ sequences:
     loop_key: adc
     loop_item_type: measurement
     type: loop
+  skip: true
 - name: 温度测量（4 项）
   steps:
   - name: 温度测量
@@ -336,6 +340,19 @@ sequences:
     loop_item_type: script
     type: loop
   skip: true
+- name: Version读取
+  steps:
+  - name: eol_version读取
+    script: 'acu/check_eol_app_version.py'
+    function: 'check_app_version'
+    params: {}
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    type: script
 - name: 清理
   steps:
   - name: 断连并断电
