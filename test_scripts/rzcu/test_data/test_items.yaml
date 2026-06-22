@@ -1,0 +1,1125 @@
+# RZCU EOL 测试数据 — 自动从 RzcuTestCase_SKU4.xlsx 生成
+# 格式: 每个 sheet 为一个顶层 key，值为列表，每项为一个测试用例
+# 只保留 是否测试==是 的条目
+
+RZCU_OD:
+  - name: "MFAN（大风扇）"
+    pin: "J10-大电流柱"
+    channel: "DI13"
+    cal_var: "DvEol_CalHsdOut_MFAN_J10_Current_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_MFAN_J10_Current_u32"
+    expected_voltage: 1
+    expected_current: 24000
+    invalid_voltage: 0
+    invalid_current: 1000
+  - name: "AFAN（辅风扇）"
+    pin: "J8-2"
+    channel: "DI14"
+    cal_var: "DvEol_CalEfuseOut_EPS_J8_2_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_EPS_J8_2_u32"
+    expected_voltage: 1
+    expected_current: 24000
+    invalid_voltage: 0
+    invalid_current: 1000
+  - name: "Efuse电源_FRSCU（右前座椅模块）"
+    pin: "J18-2"
+    channel: "DI0"
+    cal_var: "DvEol_CalHsdOut_CTM1_J18_2_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_CTM1_J18_2_u32"
+    expected_voltage: 1
+    expected_current: 16300
+    invalid_voltage: 0
+    invalid_current: 1000
+  - name: "∽Efuse电源_右前门模块"
+    pin: "J3-10"
+    channel: "DI1"
+    cal_var: "DvEol_CalEfuseOut_RightFrontDoorModule_J3_10_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_RightFrontDoorModule_J3_10_u32"
+    expected_voltage: 1
+    expected_current: 7700
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "Efuse电源_FSD"
+    pin: "J3-11"
+    channel: "DI3"
+    cal_var: "DvEol_CalHsdOut_FRPLU_J3_11_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_FRPLU_J3_11_u32"
+    expected_voltage: 1
+    expected_current: 7700
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "HWA（转向模拟模块）"
+    pin: "J13-2"
+    channel: "DI9"
+    cal_var: "DvEol_CalHsdOut_HWA_J13_2_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_HWA_J13_2_u32"
+    expected_voltage: 1
+    expected_current: 7700
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "CTM1（水侧热泵模块）"
+    pin: "J11-9"
+    channel: "DI10"
+    cal_var: "DvEol_CalHsdOut_CTM3_J11_9_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_CTM3_J11_9_u32"
+    expected_voltage: 1
+    expected_current: 7700
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "HSD_FRSCU（右前座椅模块）"
+    pin: "J3-1"
+    channel: "DI20"
+    cal_var: "DvEol_CalHsdOut_RightFrontSeatModule_J3_1_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_RightFrontSeatModule_J3_1_u32"
+    expected_voltage: 1
+    expected_current: 7700
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "~HSD预留"
+    pin: "J13-3"
+    channel: "DI34"
+    cal_var: "DvEol_CalHsdOut_REVERSE_J13_3_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_REVERSE_J13_3_u32"
+    expected_voltage: 1
+    expected_current: 7700
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "RACP"
+    pin: "J12-27"
+    channel: "DI41"
+    cal_var: "DvEol_CalHsdOut_RACP_J12_27_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_RACP_J12_27_u32"
+    expected_voltage: 1
+    expected_current: 7700
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "冰箱门电机"
+    pin: "J18-1"
+    channel: "DI48"
+    cal_var: "DvEol_CalHsdOut_CTM2_J18_1_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_CTM2_J18_1_u32"
+    expected_voltage: 1
+    expected_current: 7700
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "Efuse电源_HU"
+    pin: "J15-A-1"
+    channel: "DI4"
+    cal_var: "DvEol_CalEfuseOut_HU_J15_A_1_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_HU_J15_A_1_u32"
+    expected_voltage: 1
+    expected_current: 12400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "AEW（辅助电子雨刮）"
+    pin: "J11-12"
+    channel: "DI16"
+    cal_var: "DvEol_CalHsdOut_AEW_J11_12_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_AEW_J11_12_u32"
+    expected_voltage: 1
+    expected_current: 12400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "FRPLU（右前电动门）"
+    pin: "J6-2"
+    channel: "DI17"
+    cal_var: "DvEol_CalEfuseOut_RightFrontSeatModule_J6_2_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_RightFrontSeatModule_J6_2_u32"
+    expected_voltage: 1
+    expected_current: 12400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "OPF"
+    pin: "J11-10"
+    channel: "DI24"
+    cal_var: "DvEol_CalHsdOut_OPF_J11_10_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_OPF_J11_10_u32"
+    expected_voltage: 1
+    expected_current: 12400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "RHCM"
+    pin: "J11-11"
+    channel: "DI26"
+    cal_var: "DvEol_CalHsdOut_RHCM_J11_11_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_RHCM_J11_11_u32"
+    expected_voltage: 1
+    expected_current: 12400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "DWLC"
+    pin: "J12-25"
+    channel: "DI39"
+    cal_var: "DvEol_CalHsdOut_DWLC_J12_25_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_DWLC_J12_25_u32"
+    expected_voltage: 1
+    expected_current: 12400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "Efuse电源_RBU电机"
+    pin: "J9-1"
+    channel: "DI5"
+    cal_var: "DvEol_CalEfuseOut_EMBFL_J9_1_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_EMBFL_J9_1_u32"
+    expected_voltage: 1
+    expected_current: 19000
+    invalid_voltage: 0
+    invalid_current: 1000
+  - name: "Efuse电源_RBU电机-冗余"
+    pin: "J9-1-冗余"
+    channel: "DI5"
+    cal_var: "DvEol_CalEfuseOut_EMBFL_J9_1_u8_RY_Switch"
+    obs_var: "DvEol_ObsEfuseIn_EMBFL_J9_1_RY_u32"
+    expected_voltage: 1
+    expected_current: 19000
+    invalid_voltage: 0
+    invalid_current: 1000
+  - name: "Efuse电源_RBU阀"
+    pin: "J9-2"
+    channel: "DI6"
+    cal_var: "DvEol_CalEfuseOut_EMBFR_J9_2_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_EMBFR_J9_2_u32"
+    expected_voltage: 1
+    expected_current: 19000
+    invalid_voltage: 0
+    invalid_current: 1000
+  - name: "Efuse电源_RBU阀-冗余"
+    pin: "J9-2-冗余"
+    channel: "DI6"
+    cal_var: "DvEol_CalEfuseOut_EMBFR_J9_2_u8_RY_Switch"
+    obs_var: "DvEol_ObsEfuseIn_EMBFR_J9_2_RY_u32"
+    expected_voltage: 1
+    expected_current: 19000
+    invalid_voltage: 0
+    invalid_current: 1000
+  - name: "RWA/EPS（线控转向）"
+    pin: "J8-1"
+    channel: "DI8"
+    cal_var: "DvEol_CalHsdOut_AFAN_J8_1_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_AFAN_J8_1_u32"
+    expected_voltage: 1
+    expected_current: 19000
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "RPSD/RRPLU（右后滑移门电源/右后电动门）"
+    pin: "J6-1"
+    channel: "DI18"
+    cal_var: "DvEol_CalEfuseOut_FSD_J6_1_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_FSD_J6_1_u32"
+    expected_voltage: 1
+    expected_current: 19000
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "CTM3（水侧热泵模块）"
+    pin: "J3-12"
+    channel: "DI12"
+    cal_var: "DvEol_CalHsdOut_RRPLU_J3_12_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_RRPLU_J3_12_u32"
+    expected_voltage: 1
+    expected_current: 5400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "前排屏"
+    pin: "J13-8"
+    channel: "DI27"
+    cal_var: "DvEol_CalEfuseOut_FrontScreen_J13_8_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_FrontScreen_J13_8_u32"
+    expected_voltage: 1
+    expected_current: 5400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "加热膜"
+    pin: "J15-B-8"
+    channel: "DI49"
+    cal_var: "DvEol_CalOdhOut_Consle2Heating_J15_B_8_u8_Switch"
+    obs_var: "DvEol_ObsOdhIn_Consle2Heating_J15_B_8_u32"
+    expected_voltage: 1
+    expected_current: 5400
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "WPTC/ACCM/AGS（水加热器/压缩机/主动进气格栅）"
+    pin: "J7-26"
+    channel: "DI15"
+    cal_var: "DvEol_CalHsdOut_WPTC_J7_26_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_WPTC_J7_26_u32"
+    expected_voltage: 1
+    expected_current: 970
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "ETC"
+    pin: "J12-4"
+    channel: "DI33"
+    cal_var: "DvEol_CalHsdOut_ETC_J12_4_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_ETC_J12_4_u32"
+    expected_voltage: 1
+    expected_current: 970
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "AF"
+    pin: "J12-2"
+    channel: "DI38"
+    cal_var: "DvEol_CalHsdOut_AF_J12_2_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_AF_J12_2_u32"
+    expected_voltage: 1
+    expected_current: 970
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "∽HSD_AGS"
+    pin: "J7-21"
+    channel: "DI35"
+    cal_var: "DvEol_CalHsdOut_AGS_J7_21_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_AGS_J7_21_u32"
+    expected_voltage: 1
+    expected_current: 500
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "∽HSD_温湿度传感器（冰箱）"
+    pin: "J7-20"
+    channel: "DI36"
+    cal_var: "DvEol_CalHsdOut_ACCM_J7_20_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_ACCM_J7_20_u32"
+    expected_voltage: 1
+    expected_current: 500
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "电动风门1"
+    pin: "J15-B-3"
+    channel: "DI45"
+    cal_var: "DvEol_CalHsdOut_ElectricAirDoor1_J15_B_3_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_ElectricAirDoor1_J15_B_3_u32"
+    expected_voltage: 1
+    expected_current: 4500
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "风门电机供电"
+    pin: "J15-B-1"
+    channel: "DI47"
+    cal_var: "DvEol_CalHsdOut_WindDoorMotorPowerSupply_J15_B_1_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_WindDoorMotorPowerSupply_J15_B_1_u32"
+    expected_voltage: 1
+    expected_current: 4500
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "ODH_预留"
+    pin: "J15-B-2"
+    channel: "DI51"
+    cal_var: "DvEol_CalHsdOut_ElectricAirDoor2_J15_B_2_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_ElectricAirDoor2_J15_B_2_u32"
+    expected_voltage: 1
+    expected_current: 4500
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "AQS/PMS/CO2/ION（空气质量检测/PM2.5/CO2/离子发生器）"
+    pin: "J12-1"
+    channel: "DI22"
+    cal_var: "DvEol_CalHsdOut_AQS_J12_1_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_AQS_J12_1_u32"
+    expected_voltage: 1
+    expected_current: 1900
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "氛围灯右部分"
+    pin: "J1-27"
+    channel: "DI37"
+    cal_var: "DvEol_CalHsdOut_RightPartOfAmbientLight_J1_27_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_RightPartOfAmbientLight_J1_27_u32"
+    expected_voltage: 1
+    expected_current: 1900
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "MCUF/XPD"
+    pin: "J7-24"
+    channel: "DI23"
+    cal_var: "DvEol_CalHsdOut_MCUF_J7_24_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_MCUF_J7_24_u32"
+    expected_voltage: 1
+    expected_current: 2800
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "ACU"
+    pin: "J1-23"
+    channel: "DI25"
+    cal_var: "DvEol_CalHsdOut_ACU_J1_23_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_ACU_J1_23_u32"
+    expected_voltage: 1
+    expected_current: 1500
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "一排12V电源"
+    pin: "J12-28"
+    channel: "DI32"
+    cal_var: "DvEol_CalHsdOut_Front12VPowerSupply_J12_28_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_Front12VPowerSupply_J12_28_u32"
+    expected_voltage: 1
+    expected_current: 9500
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "PWLC"
+    pin: "J12-26"
+    channel: "DI40"
+    cal_var: "DvEol_CalHsdOut_PWLC_J12_26_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_PWLC_J12_26_u32"
+    expected_voltage: 1
+    expected_current: 9500
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "roofbar"
+    pin: "J13-4"
+    channel: "DI28"
+    cal_var: "DvEol_CalEfuseOut_SecondRowScreen_J13_4_u8_Switch"
+    obs_var: "DvEol_ObsEfuseIn_SecondRowScreen_J13_4_u32"
+    expected_voltage: 1
+    expected_current: 6200
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "一排USB"
+    pin: "J13-5"
+    channel: "DI31"
+    cal_var: "DvEol_CalHsdOut_FSSCU_J13_5_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_FSSCU_J13_5_u32"
+    expected_voltage: 1
+    expected_current: 6000
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "FSSCU（前遮阳帘）"
+    pin: "J13-6"
+    channel: "DI43"
+    cal_var: "DvEol_CalHsdOut_FrontUSB_J13_6_u8_Switch"
+    obs_var: "DvEol_ObsHsdIn_FrontUSB_J13_6_u32"
+    expected_voltage: 1
+    expected_current: 5800
+    invalid_voltage: 0
+    invalid_current: 300
+  - name: "HSD_右后车窗+遮阳帘霍尔电源_12V"
+    pin: "J4-16"
+    channel: "DI21"
+    cal_var: "DvEol_CalOdhOut_RightRearWindowSunshadeHallPowerSupply12V_J4_16_u8_Switch"
+    obs_var: "DvEol_ObsOdhIn_RightRearWindowSunshadeHallPowerSupply12V_J4_16_u32"
+    expected_voltage: 1
+    expected_current: 200
+    invalid_voltage: 0
+    invalid_current: 300
+
+RZCU_OD_V:
+  - name: "空调电机反馈5V电源"
+    pin: "J12-13"
+    channel: "AI0"
+    cal_var: "DvEol_CalTrackerOut_FeedbackVoltageOfAirConditioningMotor5VPowerSupply_J12_13_u8_Switch"
+    obs_var: "DvEol_ObsTrackerIn_FeedbackVoltageOfAirConditioningMotor5VPowerSupply_J12_13_u16"
+    expected_voltage: 5000
+    invalid_voltage: 300
+  - name: "加速踏板5V电源1"
+    pin: "J1-5"
+    channel: "AI1"
+    cal_var: "DvEol_CalTrackerOut_AcceleratorPedal5VPowerSupply1_J1_5_u8_Switch"
+    obs_var: "DvEol_ObsTrackerIn_AcceleratorPedal5VPowerSupply1_J1_5_u16"
+    expected_voltage: 5000
+    invalid_voltage: 300
+  - name: "加速踏板5V电源2"
+    pin: "J1-30"
+    channel: "AI2"
+    cal_var: "DvEol_CalTrackerOut_AcceleratorPedal5VPowerSupply2_J1_30_u8_Switch"
+    obs_var: "DvEol_ObsTrackerIn_AcceleratorPedal5VPowerSupply2_J1_30_u16"
+    expected_voltage: 5000
+    invalid_voltage: 300
+
+RZCU_IA_R:
+  - name: "IA_右后车窗开关输入"
+    pin: "J4-7"
+    channel: "RES1_IN"
+    obs_var: "DvEol_ObsRes_RightRearWindowSwitchInput_J4_7_Core2_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_右后门车窗遮阳帘开关"
+    pin: "J4-8"
+    channel: "RES2_IN"
+    obs_var: "DvEol_ObsRes_RightRearDoorWindowSunshadeSwitch_J4_8_Core2_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_蒸发器温度传感器"
+    pin: "J15-A-7"
+    channel: "RES4_IN"
+    obs_var: "DvEol_ObsRes_EvaporatorTemperatureSensor_J15_A_7_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_前空调右吹脚出风口温度传感器"
+    pin: "J15-A-8"
+    channel: "RES5_IN"
+    obs_var: "DvEol_ObsRes_FrontAirConditionerRightFootOutletTemperatureSensor_J15_A_8_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_前空调右吹面出风口温度传感器"
+    pin: "J15-A-9"
+    channel: "RES6_IN"
+    obs_var: "DvEol_ObsRes_FrontAirConditionerRightBlowingSurfaceAirOutletTemperatureSensor_J15_A_9_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_前空调左吹脚出风口温度传感器"
+    pin: "J15-A-10"
+    channel: "RES7_IN"
+    obs_var: "DvEol_ObsRes_FrontAirConditionerLeftFootAirOutletTemperatureSensor_J15_A_10_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_前空调左吹面出风口温度传感器"
+    pin: "J15-A-11"
+    channel: "RES8_IN"
+    obs_var: "DvEol_ObsRes_FrontAirConditionerLeftAirOutletTemperatureSensor_J15_A_11_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_前空调车内温度传感器"
+    pin: "J15-A-12"
+    channel: "RES9_IN"
+    obs_var: "DvEol_ObsRes_FrontAirConditioningInteriorTemperatureSensor_J15_A_12_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_四温区温度传感器（预留1）"
+    pin: "J15-A-16"
+    channel: "RES13_IN"
+    obs_var: "DvEol_ObsRes_FourTemperatureZoneTemperatureSensor1_reserved_J15_A_16_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_四温区温度传感器（预留2）"
+    pin: "J15-A-17"
+    channel: "RES14_IN"
+    obs_var: "DvEol_ObsRes_FourTemperatureZoneTemperatureSensor2_reserved_J15_A_17_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+  - name: "IA_NTC采集（预留）1"
+    pin: "J15-B-22"
+    channel: "RES21_IN"
+    obs_var: "DvEol_ObsRes_Console2HeatingNTCCollection_J15_B_22_u32"
+    set_value: 10000
+    expected: 10000
+    invalid_expected: 50000
+
+RZCU_IA_V:
+  - name: "加速踏板信号1"
+    pin: "J1-7"
+    channel: "AO0"
+    obs_var: "DvEol_ObsVol_AcceleratorPedalSignal1_J1_7_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "加速踏板信号2"
+    pin: "J1-32"
+    channel: "AO1"
+    obs_var: "DvEol_ObsVol_AcceleratorPedalSignal2_J1_32_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前空调除霜模式电机反馈电压"
+    pin: "J16-1"
+    channel: "AO4"
+    obs_var: "DvEol_ObsVol_FrontAirConditioningDefrostModeMotor_J16_1_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前空调吹面模式电机反馈电压"
+    pin: "J16-2"
+    channel: "AO5"
+    obs_var: "DvEol_ObsVol_FrontAirConditionerBlowingModeMotor_J16_2_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前空调吹脚模式电机反馈电压"
+    pin: "J16-3"
+    channel: "AO6"
+    obs_var: "DvEol_ObsVol_FrontAirConditionerFootBlowingModeMotor_J16_3_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前空调循环电机1反馈电压"
+    pin: "J16-4"
+    channel: "AO7"
+    obs_var: "DvEol_ObsVol_FrontAirConditioningCycleMotor1_J16_4_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前空调左温度电机反馈电压/IA_前空调左冷暖混合电机反馈电压"
+    pin: "J16-5"
+    channel: "AO8"
+    obs_var: "DvEol_ObsVol_FrontAirConditioningCycleMotor2_J16_5_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前空调右温度电机反馈电压/IA_前空调右冷暖混合电机反馈电压"
+    pin: "J16-6"
+    channel: "AO9"
+    obs_var: "DvEol_ObsVol_FrontAirConditionerLeftTemperatureMotor_J16_6_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前空调循环电机2反馈电压"
+    pin: "J16-7"
+    channel: "AO10"
+    obs_var: "DvEol_ObsVol_FrontAirConditionerRightTemperatureMotor_J16_7_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前空调后温度电机反馈电压"
+    pin: "J16-37"
+    channel: "AO12"
+    obs_var: "DvEol_ObsVol_FourTemperatureZones1DamperMotor_J16_37_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_四温区1风门电机反馈电压（预留）"
+    pin: "J16-38"
+    channel: "AO13"
+    obs_var: "DvEol_ObsVol_FourTemperatureZones2DamperMotor_J16_38_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_四温区2风门电机反馈电压（预留）"
+    pin: "J16-39"
+    channel: "AO14"
+    obs_var: "DvEol_ObsVol_FrontRowFootBlowingLeftTemperatureMotorFeedback_J16_39_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+  - name: "IA_前排吹脚右温度电机反馈电压"
+    pin: "J16-40"
+    channel: "AO15"
+    obs_var: "DvEol_ObsVol_FrontRowFootBlowingRightTemperatureMotorFeedback_J16_40_u16"
+    set_value: 4
+    expected: 4
+    invalid_set_value: 0
+    invalid_expected: 300
+
+RZCU_ID:
+  - name: "IDL_右后门电释放锁碰撞解锁状态信号"
+    pin: "J4-1"
+    channel: "DO0"
+    obs_var: "DvEol_ObsDig_RightRearDoorElectricReleaseLockCollisionUnlockState_J4_1_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDL_右后门开信号"
+    pin: "J4-2"
+    channel: "DO1"
+    obs_var: "DvEol_ObsDig_RightRearDoor_J4_2_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDL_右后门儿童锁信号"
+    pin: "J4-3"
+    channel: "DO2"
+    obs_var: "DvEol_ObsDig_RightRearDoorChildLock_J4_3_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDL_右后门门锁/自吸到位状态信号"
+    pin: "J4-4"
+    channel: "DO3"
+    obs_var: "DvEol_ObsDig_RightRearDoorLockStatus_J4_4_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDL_右后吸合门棘爪开关"
+    pin: "J4-5"
+    channel: "DO4"
+    obs_var: "DvEol_ObsDig_RightRearSuctionDoorPawlSwitch_J4_5_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDL_右后吸合门棘轮开关"
+    pin: "J4-6"
+    channel: "DO5"
+    obs_var: "DvEol_ObsDig_RightRearSuctionDoorRatchetSwitch_J4_6_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDL_雨刮洗涤液位检测信号"
+    pin: "J7-2"
+    channel: "DO6"
+    obs_var: "DvEol_ObsDig_WiperWasherFluidLevel_J7_2_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDH_应急开关"
+    pin: "J12-21"
+    channel: "DO7"
+    obs_var: "DvEol_ObsDig_IDHEmergencySwitch_J12_21_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDH_制动开关常开输入"
+    pin: "J12-23"
+    channel: "DO9"
+    obs_var: "DvEol_ObsDig_BrakeSwitchNormallyOpenInput_J12_23_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "制动开关信号2"
+    pin: "J12-24"
+    channel: "DO10"
+    obs_var: "DvEol_ObsDig_BrakeSwitchSignal2_J12_24_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDL_右侧电动侧滑门/右后电动门关闭开关"
+    pin: "J1-24"
+    channel: "DO11"
+    obs_var: "DvEol_ObsDig_RightRearElectricDoorClosingSwitch_J1_24_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDL_右前电动门关闭开关"
+    pin: "J1-25"
+    channel: "DO12"
+    obs_var: "DvEol_ObsDig_RightFrontElectricDoorClosingSwitch_J1_25_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+  - name: "IDH_ACC电源"
+    pin: "J7-5"
+    channel: "DO13"
+    obs_var: "DvEol_ObsDig_ACCPowerSupply_J7_5_b"
+    set_value: 1
+    expected: 1
+    invalid_set_value: 0
+    invalid_expected: 0
+
+RZCU_IP:
+  # obs_var 格式: "频率变量,占空比变量"；set_freq/set_duty: 板卡输出值；expected_freq/expected_duty: XCP 期望读取值
+  - name: "IP_碰撞发生信号输入"
+    pin: "J1-16"
+    channel: "PO-DO 64"
+    obs_var: "DvEol_ObsPwm_CollisionOccurrenceSignalInput_Freq_J1_16_u16,DvEol_ObsPwm_CollisionOccurrenceSignalInput_Duty_J1_16_u16"
+    set_freq: 100
+    set_duty: 50
+    expected_freq: 100
+    expected_duty: 50
+    hall_supply: false
+  - name: "IP_AQS输入:100Hz"
+    pin: "J16-31"
+    channel: "PO-DO 70"
+    obs_var: "DvEol_ObsPwm_AQSInput_Freq_J16_31_u16,DvEol_ObsPwm_AQSInput_Duty_J16_31_u16"
+    set_freq: 100
+    set_duty: 50
+    expected_freq: 100
+    expected_duty: 50
+    hall_supply: false
+  - name: "右后隐藏门把手信号 HALL"
+    pin: "J4-9"
+    channel: "PO-DO 65"
+    obs_var: "HALL_In_J4_9_Core2_Body_QM_1ms_Period,HALL_In_J4_9_Core2_Body_QM_1ms_Duty"
+    set_freq: 100
+    set_duty: 50
+    expected_freq: 100
+    expected_duty: 50
+    hall_supply: true
+  - name: "右后车窗霍尔1"
+    pin: "J4-10"
+    channel: "PO-DO 66"
+    obs_var: "HALL_In_J4_10_Core2_Body_ASILB_1ms_Period,HALL_In_J4_10_Core2_Body_ASILB_1ms_Duty"
+    set_freq: 100
+    set_duty: 50
+    expected_freq: 100
+    expected_duty: 50
+    hall_supply: true
+  - name: "右后车窗霍尔2"
+    pin: "J4-11"
+    channel: "PO-DO 67"
+    obs_var: "HALL_In_J4_11_Core2_Body_ASILB_1ms_Period,HALL_In_J4_11_Core2_Body_ASILB_1ms_Duty"
+    set_freq: 100
+    set_duty: 50
+    expected_freq: 100
+    expected_duty: 50
+    hall_supply: true
+  - name: "右后遮阳帘霍尔1"
+    pin: "J4-12"
+    channel: "PO-DO 68"
+    obs_var: "HALL_In_J4_12_Core2_Body_QM_1ms_Period,HALL_In_J4_12_Core2_Body_QM_1ms_Duty"
+    set_freq: 100
+    set_duty: 50
+    expected_freq: 100
+    expected_duty: 50
+    hall_supply: true
+  - name: "右后遮阳帘霍尔2"
+    pin: "J4-13"
+    channel: "PO-DO 69"
+    obs_var: "HALL_In_J4_13_Core2_Body_QM_1ms_Period,HALL_In_J4_13_Core2_Body_QM_1ms_Duty"
+    set_freq: 100
+    set_duty: 50
+    expected_freq: 100
+    expected_duty: 50
+    hall_supply: true
+
+RZCU_OP:
+  - name: "OPH_右后门板照地灯"
+    pin: "J4-15"
+    channel: "PI-DI 1"
+    cal_var: "DvEol_CalOphOut_RightRearDoorPanelFloorLight_J4_15_u8_Switch"
+    obs_var: ""
+    expected_freq: 100
+    expected_duty: 50
+    expected_current: 900
+    invalid_current: 30
+  - name: "OPH_右后门背光 1A,100Hz"
+    pin: "J1-28"
+    channel: "PI-DI 2"
+    cal_var: "DvEol_CalOphOut_RightRearDoorBacklight_J1_28_u8_Switch"
+    obs_var: ""
+    expected_freq: 100
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+
+RZCU_HBRI:
+  - name: "前清洗"
+    pin: "J7-28"
+    channel: "PI-DI 16"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_Clean_J7_28_J7_29_u8_Switch"
+    obs_var: "DvEol_ObsHbdIn_Clean_J7_28_J7_29_u32"
+    expected_freq: null
+    expected_duty: null
+    expected_current: 4500
+    invalid_current: 300
+  - name: "后清洗"
+    pin: "J7-29"
+    channel: "PI-DI 17"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_Clean_J7_28_J7_29_u8_Switch"
+    obs_var: "DvEol_ObsHbdIn_Clean_J7_28_J7_29_u32"
+    expected_freq: null
+    expected_duty: null
+    expected_current: 4500
+    invalid_current: 300
+  - name: "O_Hbri_右后车窗升降电机下降"
+    pin: "J3-3"
+    channel: "PI-DI 18"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_RightRearWindowLiftingMotorUpAndDown_J3_4_J3_3_u8_Switch"
+    obs_var: "DvEol_ObsHbdIn_RightRearWindowLiftingMotorUpAndDown_J3_4_J3_3_u32"
+    expected_freq: 20000
+    expected_duty: 50
+    expected_current: 8500
+    invalid_current: 300
+  - name: "O_Hbri_右后车窗升降电机上升"
+    pin: "J3-4"
+    channel: "PI-DI 19"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_RightRearWindowLiftingMotorUpAndDown_J3_4_J3_3_u8_Switch"
+    obs_var: "DvEol_ObsHbdIn_RightRearWindowLiftingMotorUpAndDown_J3_4_J3_3_u32"
+    expected_freq: 20000
+    expected_duty: 50
+    expected_current: 8500
+    invalid_current: 300
+  - name: "O_Hbri_右后门自吸"
+    pin: "J3-5"
+    channel: "PI-DI 20"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_RightRearDoorSelfSuctionReverse_J3_5_J3_6_u8_Switch"
+    obs_var: "DvEol_ObsHbdIn_RightRearDoorSelfSuctionReverse_J3_5_J3_6_u32"
+    expected_freq: 20000
+    expected_duty: 50
+    expected_current: 6300
+    invalid_current: 300
+  - name: "O_Hbri_右后门反转"
+    pin: "J3-6"
+    channel: "PI-DI 21"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_RightRearDoorSelfSuctionReverse_J3_5_J3_6_u8_Switch"
+    obs_var: "DvEol_ObsHbdIn_RightRearDoorSelfSuctionReverse_J3_5_J3_6_u32"
+    expected_freq: 20000
+    expected_duty: 50
+    expected_current: 6300
+    invalid_current: 300
+  - name: "O_Hbri_右后电动遮阳帘上升"
+    pin: "J3-7"
+    channel: "PI-DI 22"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_TheRightRearSunshadeRisesAndFalls_J3_7_J3_8_u8_Switch"
+    obs_var: "DvEol_ObsHbdIn_TheRightRearSunshadeRisesAndFalls_J3_7_J3_8_u32"
+    expected_freq: 20000
+    expected_duty: 50
+    expected_current: 2400
+    invalid_current: 300
+  - name: "O_Hbri_右后电动遮阳帘下降"
+    pin: "J3-8"
+    channel: "PI-DI 30"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_TheRightRearSunshadeRisesAndFalls_J3_7_J3_8_u8_Switch"
+    obs_var: "DvEol_ObsHbdIn_TheRightRearSunshadeRisesAndFalls_J3_7_J3_8_u32"
+    expected_freq: 20000
+    expected_duty: 50
+    expected_current: 2400
+    invalid_current: 300
+
+RZCU_HBRI_8912:
+  - name: "前空调除霜模式电机驱动1"
+    pin: "J16-9"
+    channel: "PI-DI 37"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningDefrostModeMotorDrive_J16_9_J16_10_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调除霜模式电机驱动2"
+    pin: "J16-10"
+    channel: "PI-DI 38"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningDefrostModeMotorDrive_J16_9_J16_10_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调吹面模式电机驱动1"
+    pin: "J16-11"
+    channel: "PI-DI 39"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningBlowingModeMotorDrive_J16_11_J16_12_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调吹面模式电机驱动2"
+    pin: "J16-12"
+    channel: "PI-DI 40"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningBlowingModeMotorDrive_J16_11_J16_12_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调吹脚模式电机驱动1"
+    pin: "J16-13"
+    channel: "PI-DI 41"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningFootBlowingModeMotorDrive_J16_13_J16_14_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调吹脚模式电机驱动2"
+    pin: "J16-14"
+    channel: "PI-DI 42"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningFootBlowingModeMotorDrive_J16_13_J16_14_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调循环模式电机1驱动1"
+    pin: "J16-15"
+    channel: "PI-DI 43"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningCycleModeMotor1Drive_J16_15_J16_16_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调循环模式电机1驱动2"
+    pin: "J16-16"
+    channel: "PI-DI 44"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningCycleModeMotor1Drive_J16_15_J16_16_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调循环模式电机2驱动1"
+    pin: "J16-17"
+    channel: "PI-DI 45"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningCycleModeMotor2Drive_J16_17_J16_18_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调循环模式电机2驱动2"
+    pin: "J16-18"
+    channel: "PI-DI 46"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirConditioningCycleModeMotor2Drive_J16_17_J16_18_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调左温度电机驱动1"
+    pin: "J16-19"
+    channel: "PI-DI 47"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirconLeftTemperatureMotorDrive_J16_19_J16_20_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调左温度电机驱动2"
+    pin: "J16-20"
+    channel: "PI-DI 48"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirconLeftTemperatureMotorDrive_J16_19_J16_20_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调右温度电机驱动1"
+    pin: "J16-21"
+    channel: "PI-DI 49"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirconRightTemperatureMotorDrive_J16_21_J16_22_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调右温度电机驱动2"
+    pin: "J16-22"
+    channel: "PI-DI 50"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirconRightTemperatureMotorDrive_J16_21_J16_22_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调后温度电机驱动1"
+    pin: "J16-23"
+    channel: "PI-DI 51"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirconRearTemperatureMotorDrive_J16_23_J16_24_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "前空调后温度电机驱动2"
+    pin: "J16-24"
+    channel: "PI-DI 52"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirconRearTemperatureMotorDrive_J16_23_J16_24_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "四温区1（预留）"
+    pin: "J16-25"
+    channel: "PI-DI 53"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirconRearModeMotorDrive_J16_25_J16_26_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "四温区1（预留）"
+    pin: "J16-26"
+    channel: "PI-DI 54"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirconRearModeMotorDrive_J16_25_J16_26_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "四温区2（预留）"
+    pin: "J16-27"
+    channel: "PI-DI 55"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontAirconSecondRowRightTemperatureMotorDrive_J16_27_J16_28_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "四温区2（预留）"
+    pin: "J16-28"
+    channel: "PI-DI 56"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontAirconSecondRowRightTemperatureMotorDrive_J16_27_J16_28_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 200
+    invalid_current: 30
+  - name: "O_Hbri_前排吹脚左温度电机驱动"
+    pin: "J16-33"
+    channel: "PI-DI 57"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontRowFootblowerLeftTemperatureMotorDrive_J16_33_J16_34_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 20
+    invalid_current: 30
+  - name: "O_Hbri_前排吹脚左温度电机驱动"
+    pin: "J16-34"
+    channel: "PI-DI 58"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontRowFootblowerLeftTemperatureMotorDrive_J16_33_J16_34_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 20
+    invalid_current: 30
+  - name: "O_Hbri_前排吹脚右温度电机驱动"
+    pin: "J16-35"
+    channel: "PI-DI 59"
+    set_value: 1
+    cal_var: "DvEol_CalHbdOut_FrontRowFootblowerRightTemperatureMotorDrive_J16_35_J16_36_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 20
+    invalid_current: 30
+  - name: "O_Hbri_前排吹脚右温度电机驱动"
+    pin: "J16-36"
+    channel: "PI-DI 60"
+    set_value: 2
+    cal_var: "DvEol_CalHbdOut_FrontRowFootblowerRightTemperatureMotorDrive_J16_35_J16_36_u8_Switch"
+    obs_var: ""
+    expected_freq: 200
+    expected_duty: 50
+    expected_current: 20
+    invalid_current: 30

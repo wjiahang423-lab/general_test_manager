@@ -1,0 +1,12 @@
+  RZCU_OD: 44 enabled items
+  RZCU_OD_V: 3 enabled items
+  RZCU_IA_R: 11 enabled items
+  RZCU_IA_V: 13 enabled items
+  RZCU_ID: 13 enabled items
+  RZCU_IP: 7 enabled items
+  RZCU_OP: 2 enabled items
+  RZCU_HBRI: 8 enabled items
+  RZCU_HBRI_8912: 24 enabled items
+
+Saved → D:\Siada\general_test_manager\test_scripts\rzcu\test_data\test_items.yaml
+exit_code=0 

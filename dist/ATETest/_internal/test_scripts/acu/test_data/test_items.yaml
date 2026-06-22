@@ -1,0 +1,395 @@
+# test_items.yaml
+fire_loop:
+  - name: "点爆回路1_BT1FD+第一排驾驶员侧安全带一级预紧器正极_读取阻值"
+    var_name: "DvEol_ObsResIn_B1B2Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B1B2_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路2_AB1FP-乘员侧正面安全气囊负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B3B4Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B3B4_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路3_BT2FD+第一排驾驶员侧安全带二级预紧器正极_读取阻值"
+    var_name: "DvEol_ObsResIn_B5B6Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B5B6_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路4_BTRD-第二排驾驶员侧安全带预紧负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B7B8Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B7B8_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路5_BTRP+第二排乘员侧安全带预紧正极_读取阻值"
+    var_name: "DvEol_ObsResIn_B9B10Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B9B10_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路6_SA1RD-后排驾驶员侧一级侧气囊负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B11B12Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B11B12_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路7_AB1FD-驾驶员侧正面安全气囊负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B21B22Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B21B22_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路8_ICAFD+驾驶员侧安全气帘前发生器正极_读取阻值"
+    var_name: "DvEol_ObsResIn_B23B24Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B23B24_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路9_BT2FP-第一排乘员侧安全带二级预紧器负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B25B26Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B25B26_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路10_SA1RP+后排乘员侧一级侧气囊正极_读取阻值"
+    var_name: "DvEol_ObsResIn_B27B28Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B27B28_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路11_FSA1FD-驾驶员远端气囊负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B29B30Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B29B30_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路12_BT1FP-第一排乘员侧安全带预紧负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B39B40Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B39B40_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路13_ICAFP+乘员侧安全气帘正极_读取阻值"
+    var_name: "DvEol_ObsResIn_B41B42Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B41B42_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路14_SA1FP-乘员侧侧面安全气囊负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B43B44Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B43B44_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路15_SA1FD+驾驶员侧侧面安全气囊正极_读取阻值"
+    var_name: "DvEol_ObsResIn_B45B46Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B45B46_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路16_AV1FD-驾驶员侧膝部气囊负极_读取阻值"
+    var_name: "DvEol_ObsResIn_B47B48Resdata_f32"
+    switch_var: "DvEol_CalFLOut_B47B48_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路17_BATDHV-高压断电负极_读取阻值"
+    var_name: "DvEol_ObsResIn_A1A2Resdata_f32"
+    switch_var: "DvEol_CalFLOut_A1A2_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路18_ALLFD+驾驶员侧安全带可变限力正极_读取阻值"
+    var_name: "DvEol_ObsResIn_A3A4Resdata_f32"
+    switch_var: "DvEol_CalFLOut_A3A4_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路19_CLL1RP-副驾驶侧二排左侧坐垫限力负极_读取阻值"
+    var_name: "DvEol_ObsResIn_A14A15Resdata_f32"
+    switch_var: "DvEol_CalFLOut_A14A15_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路20_CLL2RP+副驾驶侧二排右侧坐垫限力正极_读取阻值"
+    var_name: "DvEol_ObsResIn_A16A17Resdata_f32"
+    switch_var: "DvEol_CalFLOut_A16A17_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路21_BT2RP-副驾驶后排安全带二级预紧负极_读取阻值"
+    var_name: "DvEol_ObsResIn_A27A28Resdata_f32"
+    switch_var: "DvEol_CalFLOut_A27A28_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路22_AV1FP+副驾驶侧安全气囊主动泄气孔正极_读取阻值"
+    var_name: "DvEol_ObsResIn_A29A30Resdata_f32"
+    switch_var: "DvEol_CalFLOut_A29A30_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路23_PARP-副驾驶侧二排坐垫气囊负极_读取阻值"
+    var_name: "DvEol_ObsResIn_A31A32Resdata_f32"
+    switch_var: "DvEol_CalFLOut_A31A32_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+  - name: "点爆回路24_ALLFP-乘员侧安全带可变限力负极"
+    var_name: "DvEol_ObsResIn_A40A41Resdata_f32"
+    switch_var: "DvEol_CalFLOut_A40A41_b_Switch"
+    min: 3.0
+    max: 5.0
+    length: 4
+psi5:
+  - name: "UFSC-中间前碰加速度传感器_读取开路状态"
+    var_name: "DvEol_ObsPSI5Diag_B13B14Sensordata_u8"
+    length: 1
+    expected: "00"
+
+  - name: "UFSC-中间前碰加速度传感器_读取数据"
+    var_name: "DvEol_ObsPSI5In_B13B14Sensordata_s16"
+    length: 2
+    expected: "0000"
+
+
+  - name: "PASFD+驾驶员侧B柱侧碰加速度传感器_读取开路状态"
+    var_name: "DvEol_ObsPSI5Diag_B51B52Sensordata_u8"
+    length: 1
+    expected: "00"
+  - name: "PASFD+驾驶员侧B柱侧碰加速度传感器_读取数据"
+    var_name: "DvEol_ObsPSI5In_B51B52Sensordata_s16"
+    length: 2
+    expected: "0000"
+
+  - name: "UFSP-乘员侧前碰加速度传感器_读取开路状态"
+    var_name: "DvEol_ObsPSI5Diag_B59B60Sensordata_u8"
+    length: 1
+    expected: "00"
+  - name: "UFSP-乘员侧前碰加速度传感器_读取数据"
+    var_name: "DvEol_ObsPSI5In_B59B60Sensordata_s16"
+    length: 2
+    expected: "0000"
+
+  - name: "UFSD+驾驶员侧前碰加速度传感器_读取开路状态"
+    var_name: "DvEol_ObsPSI5Diag_B61B62Sensordata_u8"
+    length: 1
+    expected: "00"
+  - name: "UFSD+驾驶员侧前碰加速度传感器_读取数据"
+    var_name: "DvEol_ObsPSI5In_B61B62Sensordata_s16"
+    length: 2
+    expected: "0000"
+
+  - name: "PASFP-乘员侧B柱侧碰加速度传感器_读取开路状态"
+    var_name: "DvEol_ObsPSI5Diag_B63B64Sensordata_u8"
+    length: 1
+    expected: "00"
+  - name: "PASFP-乘员侧B柱侧碰加速度传感器_读取数据"
+    var_name: "DvEol_ObsPSI5In_B63B64Sensordata_s16"
+    length: 2
+    expected: "0000"
+
+  - name: "PPSFP+ 副驾驶外围压力传感器_读取开路状态"
+    var_name: "DvEol_ObsPSI5Diag_A34A35Sensordata_u8"
+    length: 1
+    expected: "00"
+  - name: "PPSFP+ 副驾驶外围压力传感器_读取数据"
+    var_name: "DvEol_ObsPSI5In_A34A35Sensordata_s16"
+    length: 2
+    expected: "0000"
+
+  - name: "PPSFD- 驾驶员外围压力传感器_读取开路状态"
+    var_name: "DvEol_ObsPSI5Diag_A36A37Sensordata_u8"
+    length: 1
+    expected: "00"
+  - name: "PPSFD- 驾驶员外围压力传感器_读取数据"
+    var_name: "DvEol_ObsPSI5In_A36A37Sensordata_s16"
+    length: 2
+    expected: "0000"
+smi970:
+  - name: "HfAx"
+    var_name: "DvEol_ObsIMUIn_SmiAccelerateHfAxdata_f32"
+    min: -0.1
+    max: 0.1
+    length: 4
+  - name: "HfAy"
+    var_name: "DvEol_ObsIMUIn_SmiAccelerateHfAydata_f32"
+    min: -0.1
+    max: 0.1
+    length: 4
+
+  - name: "HfAz"
+    var_name: "DvEol_ObsIMUIn_SmiAccelerateHfAzdata_f32"
+    min: 0.9
+    max: 1.1
+    length: 4
+
+  - name: "LfAx"
+    var_name: "DvEol_ObsIMUIn_SmiAccelerateLfAxdata_f32"
+    min: -0.1
+    max: 0.1
+    length: 4
+
+  - name: "LfAy"
+    var_name: "DvEol_ObsIMUIn_SmiAccelerateLfAydata_f32"
+    min: -0.1
+    max: 0.1
+    length: 4
+
+  - name: "LfAz"
+    var_name: "DvEol_ObsIMUIn_SmiAccelerateLfAzdata_f32"
+    min: 0.9
+    max: 1.1
+    length: 4
+
+  - name: "RollX"
+    var_name: "DvEol_ObsIMUIn_SmiRollRateXdata_f32"
+    min: -0.11
+    max: 0.11
+    length: 4
+
+  - name: "PitchY"
+    var_name: "DvEol_ObsIMUIn_SmiPitchRateYdata_f32"
+    min: -1
+    max: 1
+    length: 4
+
+  - name: "YawZ"
+    var_name: "DvEol_ObsIMUIn_SmiYawRateZdata_f32"
+    min: -1
+    max: 1
+    length: 4
+adc:
+  - name: "VbatCan"
+    var_name: "DvEol_ObsIAIn_VbatCandata_u16"
+    min: 11800
+    max: 12200
+    length: 2
+  - name: "Vst3V3"
+    var_name: "DvEol_ObsIAIn_Vst3V3data_u16"
+    min: 3200
+    max: 3400
+    length: 2
+  - name: "Vst5V0"
+    var_name: "DvEol_ObsIAIn_Vst5V0data_u16"
+    min: 4900
+    max: 5100
+    length: 2
+  - name: "VehicleVersion"
+    var_name: "DvEol_ObsIAIn_VehicleVersiondata_u16"
+    min: 130
+    max: 160
+    length: 2
+  - name: "HdVersion"
+    var_name: "DvEol_ObsIAIn_HdVersiondata_u16"
+    min: 900
+    max: 1648
+    length: 2
+  - name: "BomVersion"
+    var_name: "DvEol_ObsIAIn_BomVersiondata_u16"
+    min: 130
+    max: 160
+    length: 2
+  - name: "Vas6V7"
+    var_name: "DvEol_ObsIAIn_Vas6V7data_u16"
+    min: 6500
+    max: 6800
+    length: 2
+  - name: "VH33V"
+    var_name: "DvEol_ObsIAIn_VH33Vdata_u16"
+    min: 20000
+    max: 36000
+    length: 2
+  - name: "Vign"
+    var_name: "DvEol_ObsIAIn_Vigndata_u16"
+    min: 11500
+    max: 12200
+    length: 2
+temperature:
+  - name: "SMI970"
+    var_name: "DvEol_ObsTempIn_Smi970Temp_f32"
+    length: 4
+    min: 0
+    max: 100
+  - name: "CG904_1"
+    var_name: "DvEol_ObsTempIn_Cg904Temp_s16"
+    length: 2
+    min: 25
+    max: 100
+  - name: "CG904_2"
+    var_name: "DvEol_ObsTempIn_Cg904_2Temp_s16"
+    length: 2
+    min: 25
+    max: 100
+  - name: "RH850"
+    var_name: "DvEol_ObsTempIn_RH850Temp_f32"
+    length: 4
+    min: 25
+    max: 100
+
+did_checks:
+  - did_name: "F187"
+    var_name: "VehicleManufacturerSparePartNumId0xF187"
+    length: 15
+    expected: "LAJ-56040012"
+  - did_name: "F18A"
+    var_name: "SystemSupplierIdentifierDataId0xF18A"
+    length: 3
+    expected: "7DN"
+  - did_name: "F18C"
+    var_name: "ECUSerialNumberDataId0xF18C"
+    length: 10
+    expected: "25A2000002"
+  - did_name: "F193"
+    var_name: "ECUHardwareVersionNumber0xF193"
+    length: 4
+    expected: "0004"
+SMA760:
+ 
+  - name: "SMA760 有效性检测"
+    var_name: "DvEol_ObsIMUIn_Sma760DataValid_b"
+    length: 1
+    expected_int: 0
+
+SMA720:
+  - name: "SMA720 有效性检测"
+    var_name: "DvEol_ObsIMUIn_Sma720DataValid_b"
+    length: 1
+    expected_int: 0
+  
+
+did_write:
+  - did_name: "F187"
+    var_name: "did_rw_flag"
+    length: 15
+    expected: "LAJ-56040012"
+  - did_name: "F18A"
+    var_name: "SystemSupplierIdentifierDataId0xF18A"
+    length: 3
+    expected: "7DN"
+  - did_name: "F18C"
+    var_name: "ECUSerialNumberDataId0xF18C"
+    length: 10
+    expected: "25A2000002"
+  - did_name: "F193"
+    var_name: "ECUHardwareVersionNumber0xF193"
+    length: 4
+    expected: "0004"
+
+app_version:
+  - did_name: "F195"
+    var_name: "app_version"
+    length: 4
+    expected: "0021"
+
+
+eol_version:
+  - did_name: "F195"
+    var_name: "app_version"
+    length: 4
+    expected: "1015"
+
+

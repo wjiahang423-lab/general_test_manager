@@ -1,0 +1,375 @@
+name: ACU EOL 全量测试
+version: '1.0'
+description: '安全气囊控制器（ACU）产线 EOL 测试计划。 覆盖上电初始化、HSM 检测、火回路阻值（24路）、PSI5 传感器（14项）、 SMI970
+  IMU（9项）、SMA720/760 检测、ADC 测量（9项）、温度测量（4项）、 DID 写入（4项）、DID 读取验证（4项）共 73 个测试步骤。
+
+  '
+global_params:
+  station_id: LINE-ACU-01
+variables: {}
+variable_types: {}
+sequences:
+- name: 初始化
+  steps:
+  - name: 上电并进入 EOL 模式
+    script: acu/setup_eol.py
+    function: setup
+    params: {}
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 1
+    breakpoint: false
+    return_map: {}
+    type: script
+- name: HSM 与基础检查
+  steps:
+  - name: HSM 开启检测
+    script: acu/check_hsm.py
+    function: measure
+    params: {}
+    limits: null
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    type: script
+  - name: 断电
+    script: acu/setup_eol.py
+    function: power_off
+    params:
+      params: ''
+    limits: null
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    type: script
+  - name: 延时3S
+    script: ''
+    function: ''
+    params:
+      seconds: 3.0
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    type: delay
+  - name: 上电
+    script: acu/setup_eol.py
+    function: power_on
+    params:
+      params: ''
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 1
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    type: script
+  - name: 延时10S
+    script: ''
+    function: ''
+    params:
+      seconds: 10.0
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    type: delay
+  skip: true
+- name: 点火回路阻值（24 路）
+  steps:
+  - name: 点火回路阻值
+    script: acu/measure_fire_loop_item.py
+    function: measure
+    params:
+      params: ''
+    limits: null
+    on_fail: continue
+    timeout: 15.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: fire_loop
+    loop_item_type: measurement
+    type: loop
+  - name: delay_复制
+    script: acu/_session.py
+    function: delay
+    params:
+      sec: 3
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    type: script
+  skip: true
+- name: PSI5 传感器（14 项）
+  steps:
+  - name: delay_复制_复制
+    script: acu/_session.py
+    function: delay
+    params:
+      sec: 3
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    type: script
+  - name: PSI5 传感器测试
+    script: acu/measure_psi5_item.py
+    function: measure
+    params: {}
+    limits: null
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: psi5
+    loop_item_type: script
+    type: loop
+  skip: true
+- name: SMI970 IMU（9 项）
+  steps:
+  - name: SMI970 IMU 测试
+    script: acu/measure_imu_item.py
+    function: measure
+    params: {}
+    limits:
+      low: null
+      high: null
+      unit: ''
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: smi970
+    loop_item_type: measurement
+    type: loop
+  skip: true
+- name: SMA720 与 SMA760 检测
+  steps:
+  - name: SMA760 传感器有效性检测
+    script: acu/check_sma_item.py
+    function: measure
+    params:
+      params: ''
+    limits: null
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: SMA760
+    loop_item_type: script
+    type: loop
+  - name: SMA720 传感器有效性检测
+    script: acu/check_sma_item.py
+    function: measure
+    params:
+      params: ''
+    limits: null
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: SMA720
+    loop_item_type: script
+    type: loop
+  skip: true
+- name: ADC 测量（9 项）
+  steps:
+  - name: ADC 测量
+    script: acu/measure_adc_item.py
+    function: measure
+    params: {}
+    limits:
+      low: null
+      high: null
+      unit: ''
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: adc
+    loop_item_type: measurement
+    type: loop
+  skip: true
+- name: 温度测量（4 项）
+  steps:
+  - name: 温度测量
+    script: acu/measure_temperature_item.py
+    function: measure
+    params: {}
+    limits:
+      low: null
+      high: null
+      unit: °C
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: temperature
+    loop_item_type: measurement
+    type: loop
+  skip: true
+- name: DID 写入（4 项）
+  steps:
+  - name: DID 写入
+    script: acu/write_did_item.py
+    function: measure
+    params:
+      params: ''
+    limits: null
+    on_fail: continue
+    timeout: 20.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: did_write
+    loop_item_type: script
+    type: loop
+  - name: 断电
+    script: acu/setup_eol.py
+    function: power_off
+    params:
+      params: ''
+    limits: null
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    type: script
+  - name: delay
+    script: acu/_session.py
+    function: delay
+    params:
+      sec: 3
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    type: script
+  - name: 上电_复制
+    script: acu/setup_eol.py
+    function: power_on
+    params:
+      params: ''
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 1
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    type: script
+  skip: true
+- name: DID 读取验证（4 项）
+  steps:
+  - name: DID 读取验证
+    script: acu/read_did_item.py
+    function: measure
+    params: {}
+    limits: null
+    on_fail: continue
+    timeout: 20.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    loop_source: acu/test_data/test_items.yaml
+    loop_key: did_checks
+    loop_item_type: script
+    type: loop
+  skip: true
+- name: 读取EOL版本号
+  steps:
+  - name: 读取EOL版本
+    script: ../../../../test_scripts/acu/check_eol_app_version.py
+    function: check_app_version
+    params:
+      params: ''
+    limits: null
+    on_fail: abort
+    timeout: 30.0
+    retry_count: 0
+    breakpoint: false
+    return_map:
+      value: ''
+      unit: ''
+      message: ''
+    loop_source: ../../../../test_scripts/acu/test_data/test_items.yaml
+    loop_key: eol_version
+    loop_item_type: measurement
+    type: loop
+- name: 清理
+  steps:
+  - name: 断连并断电
+    script: acu/teardown.py
+    function: teardown
+    params: {}
+    limits: null
+    on_fail: continue
+    timeout: 10.0
+    retry_count: 0
+    breakpoint: false
+    return_map: {}
+    type: script

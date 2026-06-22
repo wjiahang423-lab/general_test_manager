@@ -1,0 +1,46 @@
+# RZCU EOL 测试配置文件
+
+file_paths:
+  # A2L 文件路径（绝对路径）
+  a2l_file: "E:/机柜相关资料/code/lixiang_zk_loadbox/RZCU/a2l/PZCU_GEN.A2L"
+  # 数据驱动 Excel（相对于 rzcu/ 目录，或绝对路径）
+  test_case_excel: "test_data/RzcuTestCase_SKU4.xlsx"
+  # 原始 RZCU 工程路径（提供硬件驱动模块）
+  original_project: "D:/wy_wangbo/WorkSpace/Work/ZCU/python/RZCU/RZCU"
+
+network:
+  local_ip: "172.31.10.100"
+  local_port: 50000
+  target_ip: "172.31.10.33"
+  target_port: 50000
+  udp_timeout: 2       # 每次收发超时（秒）
+  xcp_retry: 5         # XCP 指令最大重试次数
+
+power:
+  device_main:  "800634011786820060"
+  device_other: "800634011786820056"
+
+# 各测试类型的电源配置
+power_settings:
+  default:  { vol_main: 12, cur_main: 5,  vol_other: 12, cur_other: 5  }
+  od:       { vol_main: 12, cur_main: 30, vol_other: 12, cur_other: 2  }
+  od_v:     { vol_main: 12, cur_main: 10, vol_other: 12, cur_other: 5  }
+  ia_r:     { vol_main: 12, cur_main: 5,  vol_other: 12, cur_other: 5  }
+  ia_v:     { vol_main: 12, cur_main: 10, vol_other: 12, cur_other: 5  }
+  id:       { vol_main: 12, cur_main: 5,  vol_other: 12, cur_other: 5  }
+  ip:       { vol_main: 12, cur_main: 5,  vol_other: 12, cur_other: 5  }
+  op:       { vol_main: 12, cur_main: 30, vol_other: 12, cur_other: 2  }
+  hbri:     { vol_main: 12, cur_main: 30, vol_other: 12, cur_other: 2  }
+  hbri_8912: { vol_main: 12, cur_main: 3,  vol_other: 12, cur_other: 2  }
+
+# 各测试类型的容差（±比例）
+test_tolerance:
+  default:  0.10
+  ia_r:     0.10
+  ia_v:     0.10
+  od:       0.15
+  od_v:     0.10
+  hbri:     0.10
+  hbri_8912: 0.10
+  op:       0.10
+  ip:       0.05

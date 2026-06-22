@@ -1,0 +1,235 @@
+﻿name: RZCU EOL 娴嬭瘯
+version: "2.0"
+description: >
+  RZCU锛堝悗鍖烘帶鍒跺櫒锛塃OL 涓嬬嚎娴嬭瘯銆?
+  鏁版嵁椹卞姩鏂囦欢锛歵est_scripts/rzcu/test_data/RzcuTestCase_SKU4.xlsx锛堢洿鎺ヨ鍙栵紝鏃犻渶 YAML 杞崲锛?
+  鏃ュ織杈撳嚭锛歵est_scripts/rzcu/logs/
+
+global_params: {}
+
+variables: {}
+variable_types: {}
+
+setup_sequence:
+  name: 鍒濆鍖?
+  steps:
+    - name: 涓婄數 & XCP 杩炴帴
+      step_type: script
+      script: rzcu/setup.py
+      function: setup
+      params: {}
+      limits: ~
+      on_fail: abort
+      timeout: 30
+
+sequences:
+  - name: 鏁板瓧杈撳嚭 (OD)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(OD)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: od
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_OD 鏁板瓧杈撳嚭娴嬭瘯
+        step_type: loop
+        script: rzcu/test_od.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_OD
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 30
+
+  - name: 妯℃嫙鐢靛帇杈撳嚭 (OD_V)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(OD_V)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: od_v
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_OD_V 妯℃嫙鐢靛帇杈撳嚭娴嬭瘯
+        step_type: loop
+        script: rzcu/test_od_v.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_OD_V
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 30
+
+  - name: 妯℃嫙杈撳叆-鐢甸樆鍨?(IA_R)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(IA_R)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: ia_r
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_IA_R 妯℃嫙杈撳叆鐢甸樆娴嬭瘯
+        step_type: loop
+        script: rzcu/test_ia_r.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_IA_R
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 30
+
+  - name: 妯℃嫙杈撳叆-鐢靛帇鍨?(IA_V)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(IA_V)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: ia_v
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_IA_V 妯℃嫙杈撳叆鐢靛帇娴嬭瘯
+        step_type: loop
+        script: rzcu/test_ia_v.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_IA_V
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 30
+
+  - name: 鏁板瓧杈撳叆 (ID)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(ID)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: id
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_ID 鏁板瓧杈撳叆娴嬭瘯
+        step_type: loop
+        script: rzcu/test_id.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_ID
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 30
+
+  - name: 杈撳叆 PWM (IP)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(IP)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: ip
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_IP 杈撳叆 PWM 娴嬭瘯
+        step_type: loop
+        script: rzcu/test_ip.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_IP
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 30
+
+  - name: 杈撳嚭 PWM (OP)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(OP)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: op
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_OP 杈撳嚭 PWM 娴嬭瘯
+        step_type: loop
+        script: rzcu/test_op.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_OP
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 60
+
+  - name: H 妗ラ┍鍔?(HBRI)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(HBRI)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: hbri
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_HBRI H 妗ラ┍鍔ㄦ祴璇?
+        step_type: loop
+        script: rzcu/test_hbri.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_HBRI
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 60
+
+  - name: H 妗ラ┍鍔?8912 (HBRI_8912)
+    steps:
+      - name: 鐢垫簮鍒濆鍖?(HBRI_8912)
+        step_type: script
+        script: rzcu/setup.py
+        function: restart_power_for
+        params:
+          test_type: hbri_8912
+        limits: ~
+        on_fail: abort
+        timeout: 15
+      - name: RZCU_HBRI_8912 H 妗ラ┍鍔?8912 娴嬭瘯
+        step_type: loop
+        script: rzcu/test_hbri_8912.py
+        function: run
+        params: {}
+        loop_source: rzcu/test_data/RzcuTestCase_SKU4.xlsx
+        loop_key: RZCU_HBRI_8912
+        loop_item_type: measurement
+        on_fail: continue
+        timeout: 60
+
+teardown_sequence:
+  name: 鏀跺熬
+  steps:
+    - name: 涓嬬數
+      step_type: script
+      script: rzcu/teardown.py
+      function: teardown
+      params: {}
+      limits: ~
+      on_fail: continue
+      timeout: 15
+

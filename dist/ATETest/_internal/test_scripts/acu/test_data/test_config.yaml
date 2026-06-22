@@ -1,0 +1,53 @@
+# test_config.yaml
+can_bus:
+  channel: "PCAN_USBBUS1"  # PCAN通道名称
+  bitrate: 500000          # CAN波特率
+  bus: 1
+can_ids:
+  send: 0x6C6
+  recv: 0x6C7
+  speed: 0x100
+  dig_send: 0x7F1
+  dig_recv: 0x7F9
+file_paths:
+  a2l_file: "D:/wy_wangbo/WorkSpace/Work/ACU/Release/3.7/ACU_GEN_20260616_184356.A2L"
+  pts_excel: "test_data/wm_ACU生产测试规范V1.6.xlsx"
+  pts_excel_output: "reports/_test_report.xlsx"
+  test_report: "reports/test_report.txt"
+  fire_loop_config: "test_data/fire_loop_config.yaml"
+  test_items_config: "test_data/test_items.yaml"
+
+# 测试配置类型：yaml/excel
+test_config_type: "yaml"  # 独立出来，不在file_paths里
+excel_config:
+  sheet_name: "EOL"
+  column_item: "K"
+  column_data: "N"
+  column_result: "O"
+ecu_info:
+  emspn: "LAJ-56040012"
+  emsid: "7DN"
+  manudata: "251114"
+  sernum: "25A2000002"
+  hwversion: "0004"
+  eol_version: "1014"
+  app_version: "001d"
+can_fd_config:
+  f_clock: 40000000
+  nom_brp: 5
+  nom_tseg1: 11
+  nom_tseg2: 4
+  nom_sjw: 1
+  data_brp: 4
+  data_tseg1: 3
+  data_tseg2: 1
+  data_sjw: 1
+
+## test_data/test_config.yaml 新增部分
+#file_paths:
+#  # ... 原有配置 ...
+#  pts_excel_template: "./test_data/PTS_Template.xlsx"  # PTS Excel模板路径
+#  pts_excel_output: "./test_results/PTS_Test_Report_{datetime}.xlsx"  # 测试结果输出路径
+#
+## 测试配置类型：yaml/excel
+#  test_config_type: "excel"  # 优先使用Excel配置

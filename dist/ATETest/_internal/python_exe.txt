@@ -1,0 +1,9 @@
+# ATETest 脚本执行 Python 解释器路径
+# 填写系统 Python 的完整路径，ATETest 将用此 Python 运行所有测试脚本
+# 修改后重启 ATETest 生效，无需重新编译
+#
+# 示例：
+# C:\Users\dufushun\AppData\Local\Programs\Python\Python39\python.exe
+# C:\Python310\python.exe
+
+C:\Users\dufushun\AppData\Local\Programs\Python\Python39\python.exe
