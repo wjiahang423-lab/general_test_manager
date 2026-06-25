@@ -10,13 +10,90 @@ Columns:  参数名 | 类型注解（只读）| 值/变量
 
 from __future__ import annotations
 
+import ast
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QBrush, QColor
 from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout,
     QTableWidget, QTableWidgetItem, QHeaderView,
     QPushButton, QLabel, QMenu, QAction,
+    QDialog, QDialogButtonBox,
 )
+
+
+class _DictEditDialog(QDialog):
+    def __init__(self, parent=None, title: str = "编辑字典", initial: dict | None = None):
+        super().__init__(parent)
+        self.setWindowTitle(title)
+        self.resize(480, 320)
+
+        layout = QVBoxLayout(self)
+        layout.setSpacing(6)
+
+        self._table = QTableWidget(0, 2)
+        self._table.setHorizontalHeaderLabels(["Key", "Value"])
+        self._table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self._table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        layout.addWidget(self._table)
+
+        btn_row = QHBoxLayout()
+        self._btn_add = QPushButton("➕ 添加")
+        self._btn_del = QPushButton("🗑 删除")
+        self._btn_add.clicked.connect(self._add_row)
+        self._btn_del.clicked.connect(self._del_row)
+        btn_row.addWidget(self._btn_add)
+        btn_row.addWidget(self._btn_del)
+        btn_row.addStretch()
+        layout.addLayout(btn_row)
+
+        button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        button_box.accepted.connect(self.accept)
+        button_box.rejected.connect(self.reject)
+        layout.addWidget(button_box)
+
+        self._populate(initial or {})
+
+    def _populate(self, initial: dict) -> None:
+        self._table.setRowCount(0)
+        if not initial:
+            self._add_row()
+            return
+        for k, v in initial.items():
+            self._add_row(str(k), self._display_value(v))
+
+    @staticmethod
+    def _display_value(value) -> str:
+        if value is None:
+            return ""
+        if isinstance(value, dict):
+            return str(value)
+        return str(value)
+
+    def _add_row(self, key: str = "", value: str = "") -> None:
+        row = self._table.rowCount()
+        self._table.insertRow(row)
+        self._table.setItem(row, 0, QTableWidgetItem(key))
+        self._table.setItem(row, 1, QTableWidgetItem(value))
+
+    def _del_row(self) -> None:
+        row = self._table.currentRow()
+        if row >= 0:
+            self._table.removeRow(row)
+        if self._table.rowCount() == 0:
+            self._add_row()
+
+    def get_dict(self) -> dict:
+        result = {}
+        for row in range(self._table.rowCount()):
+            k_item = self._table.item(row, 0)
+            v_item = self._table.item(row, 1)
+            key = (k_item.text().strip() if k_item else "")
+            value = (v_item.text().strip() if v_item else "")
+            if not key:
+                continue
+            result[key] = ParamEditor._coerce(value, "")
+        return result
 
 
 class ParamEditor(QWidget):
@@ -44,16 +121,19 @@ class ParamEditor(QWidget):
         btn_row = QHBoxLayout()
         self._btn_add = QPushButton("➕ 添加")
         self._btn_del = QPushButton("🗑 删除")
+        self._btn_dict = QPushButton("🧩 字典")
+        self._btn_dict.setToolTip("为当前参数行编辑字典的 key / value")
         self._btn_var = QPushButton("📋 选变量")
         self._btn_var.setToolTip("将选中的变量以 {{名}} 插入当前行的值列")
         self._btn_var.setEnabled(False)
-        for btn in (self._btn_add, self._btn_del, self._btn_var):
+        for btn in (self._btn_add, self._btn_del, self._btn_dict, self._btn_var):
             btn_row.addWidget(btn)
         btn_row.addStretch()
         layout.addLayout(btn_row)
 
         self._btn_add.clicked.connect(lambda: self._add_row())
         self._btn_del.clicked.connect(self._del_row)
+        self._btn_dict.clicked.connect(self._edit_current_dict)
         self._btn_var.clicked.connect(self._pick_variable)
 
     # ------------------------------------------------------------------
@@ -65,10 +145,14 @@ class ParamEditor(QWidget):
         self._btn_var.setEnabled(bool(self._variables))
 
     def load_params(self, params: dict) -> None:
-        """Load from a plain {name: value} dict (type column stays empty)."""
+        """Load from a plain {name: value} dict, preserving dict values as dicts."""
         self._table.setRowCount(0)
         for k, v in params.items():
-            self._add_row(str(k), "", str(v))
+            if isinstance(v, dict):
+                self._add_row(str(k), "dict", "")
+                self._set_row_value(self._table.rowCount() - 1, v)
+            else:
+                self._add_row(str(k), "", self._display_value(v))
 
     def load_params_typed(self, params_info: list) -> None:
         """Load from signature scan: list of (name, type_str, default_value_str).
@@ -79,12 +163,20 @@ class ParamEditor(QWidget):
         self._table.setRowCount(0)
         for name, type_str, default in params_info:
             value = existing.get(name, default)
-            self._add_row(str(name), str(type_str), str(value))
+            if isinstance(value, dict):
+                self._add_row(str(name), "dict", "")
+                self._set_row_value(self._table.rowCount() - 1, value)
+            else:
+                self._add_row(str(name), str(type_str), self._display_value(value))
         # Keep any user-defined params that are not in the function signature
         # (e.g. {{varname}} references, or params for old-style single-dict functions)
         for name, value in existing.items():
             if name not in known_names:
-                self._add_row(str(name), "", str(value) if value is not None else "")
+                if isinstance(value, dict):
+                    self._add_row(str(name), "dict", "")
+                    self._set_row_value(self._table.rowCount() - 1, value)
+                else:
+                    self._add_row(str(name), "", self._display_value(value) if value is not None else "")
 
     def get_params(self) -> dict:
         result = {}
@@ -97,9 +189,21 @@ class ParamEditor(QWidget):
             v      = v_item.text().strip()    if v_item    else ""
             if not k:
                 continue
+            if v_item is not None:
+                stored = v_item.data(Qt.UserRole)
+                if isinstance(stored, dict):
+                    result[k] = stored
+                    continue
+                if stored is not None and not isinstance(stored, str):
+                    result[k] = stored
+                    continue
             # Variable references are always kept as strings for later resolution
             if v.startswith("{{"):
                 result[k] = v
+                continue
+            if type_s.lower() == "dict":
+                parsed = self._try_parse_dict(v)
+                result[k] = parsed if isinstance(parsed, dict) else {}
                 continue
             result[k] = self._coerce(v, type_s)
         return result
@@ -144,6 +248,47 @@ class ParamEditor(QWidget):
 
     _TYPE_FG = QColor("#777777")
 
+    @staticmethod
+    def _display_value(value) -> str:
+        if value is None:
+            return ""
+        return str(value)
+
+    @staticmethod
+    def _try_parse_dict(value) -> dict:
+        if isinstance(value, dict):
+            return value
+        if not isinstance(value, str):
+            return {}
+        text = value.strip()
+        if not text:
+            return {}
+        try:
+            parsed = ast.literal_eval(text)
+        except Exception:
+            return {}
+        return parsed if isinstance(parsed, dict) else {}
+
+    def _set_row_value(self, row: int, value: object) -> None:
+        item = self._table.item(row, 2)
+        if item is None:
+            item = QTableWidgetItem("")
+            self._table.setItem(row, 2, item)
+        if isinstance(value, dict):
+            item.setText(str(value))
+            item.setData(Qt.UserRole, value)
+            type_item = self._table.item(row, 1)
+            if type_item is None:
+                type_item = QTableWidgetItem("dict")
+                type_item.setFlags(type_item.flags() & ~Qt.ItemIsEditable)
+                type_item.setForeground(QBrush(self._TYPE_FG))
+                self._table.setItem(row, 1, type_item)
+            else:
+                type_item.setText("dict")
+            return
+        item.setData(Qt.UserRole, None)
+        item.setText(self._display_value(value))
+
     def _add_row(self, key: str = "", type_str: str = "", value: str = "") -> None:
         row = self._table.rowCount()
         self._table.insertRow(row)
@@ -158,6 +303,24 @@ class ParamEditor(QWidget):
         rows = {idx.row() for idx in self._table.selectedIndexes()}
         for row in sorted(rows, reverse=True):
             self._table.removeRow(row)
+
+    def _edit_current_dict(self) -> None:
+        row = self._table.currentRow()
+        if row < 0:
+            self._add_row()
+            row = self._table.rowCount() - 1
+        key_item = self._table.item(row, 0)
+        key_name = key_item.text().strip() if key_item else ""
+        current_value = None
+        item = self._table.item(row, 2)
+        if item is not None:
+            current_value = item.data(Qt.UserRole)
+            if not isinstance(current_value, dict):
+                current_value = self._try_parse_dict(item.text())
+        dlg = _DictEditDialog(self, f"编辑字典参数: {key_name or '未命名'}", current_value or {})
+        if dlg.exec_():
+            self._set_row_value(row, dlg.get_dict())
+            self._table.setCurrentCell(row, 2)
 
     def _pick_variable(self) -> None:
         if not self._variables:

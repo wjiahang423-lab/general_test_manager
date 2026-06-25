@@ -187,7 +187,7 @@ class StepEditor(QWidget):
         loop_form.setSpacing(6)
         loop_src_row = QHBoxLayout()
         self._loop_src_edit = QLineEdit()
-        self._loop_src_edit.setPlaceholderText("相对 scripts_root 的 YAML 文件路径")
+        self._loop_src_edit.setPlaceholderText("相对 scripts_root 的 .yaml / .xlsx 文件路径")
         self._btn_loop_src = QPushButton("浏览…")
         self._btn_loop_src.clicked.connect(self._browse_loop_source)
         loop_src_row.addWidget(self._loop_src_edit)
