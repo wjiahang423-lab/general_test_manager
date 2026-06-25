@@ -12,10 +12,17 @@ params（由 loop 展开后注入）：
 
 import sys
 import os
+from PCANBasic import *
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from _session import get_session
+from core import DiagnosticProtocol
+
+diag = DiagnosticProtocol(
+    pcan_manager=PCAN_USBBUS1,
+    send_can_id=0x7F1
+)
 
 
 def measure(params: dict) -> dict:
@@ -50,31 +57,31 @@ def measure(params: dict) -> dict:
 
 
 def check_app_version(params: dict) -> dict:
-    var_name = params.get("var_name", "")
+    var_name = params.get("did_name", "")
     length = int(params.get("length", 2))
-    item_name = params.get("name", var_name)
+    item_name = params.get("did_name", var_name)
+    expected = params.get("expected", "")
 
     try:
-        config, xcp, a2l = get_session()
-        result_hex = xcp.read_variable(
-            variable_name=var_name,
-            a2l_dic=a2l,
-            offset=0,
-            length=length,
-        )
-        if result_hex is None:
+        # 1. 读取EOL版本
+        response = diag.read_did(0xF1, 0x95)
+        assert response is not None, "读取F195 DID失败"
+        _version = ''
+        if response and len(response) >= 6 and response[0:4] == [0x05, 0x62, 0xF1, 0x95]:
+            _version = bytes(response[4:6]).hex()
+
+        if response is None:
             return {"value": None, "unit": "", "pass": False,
                     "message": f"{item_name}: 读取失败（返回 None）"}
 
-        bytes_data = bytes.fromhex(result_hex)
-        value = int.from_bytes(bytes_data, "big", signed=True)
+        if _version == expected:
 
-        return {
-            "value": value,
-            "unit": "",
-            "pass": True,  # 数值范围由 step limits 判断
-            "message": f"{item_name}: {value}",
-        }
+            return {
+                "value": _version,
+                "unit": "",
+                "pass": True,  # 数值范围由 step limits 判断
+                "message": f"{item_name}: {_version}",
+            }
     except Exception as exc:
         return {"value": None, "unit": "", "pass": False, "message": str(exc)}
 

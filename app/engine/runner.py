@@ -128,7 +128,6 @@ class TestRunner(QThread):
                 skip_r = StepResult(step.name, seq.name, "SKIP", None, "", reason, 0)
                 step_results.append(skip_r)
                 self.sig_step_finished.emit(skip_r)
-                self.sig_log.emit(f"  [SKIP] {step.name}")
                 continue
 
             if step.breakpoint and not self._abort_event.is_set():
