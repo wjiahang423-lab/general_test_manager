@@ -1,5 +1,5 @@
 @echo off
-setlocal EnableDelayedExpansion
+setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
 
 echo.
@@ -10,31 +10,32 @@ echo.
 
 :: ── 1. 检查 Python ──────────────────────────────────────────
 where python >nul 2>&1
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo [错误] 未找到 python，请安装 Python 3.10+ 并加入 PATH。
-    goto :fail
+    exit /b 1
 )
-for /f "delims=" %%v in ('python --version 2^>^&1') do set PY_VER=%%v
+for /f "delims=" %%v in ('python --version 2^>^&1') do set "PY_VER=%%v"
 echo [OK] %PY_VER%
 
 :: ── 2. 安装 / 升级依赖 ──────────────────────────────────────
-echo [步骤 1/4] 安装依赖包...
-python -m pip install --quiet --upgrade pillow pyinstaller
-if %errorlevel% neq 0 (
-    echo [错误] pip install 失败，请检查网络或手动执行：
-    echo        pip install pillow pyinstaller
-    goto :fail
+echo [步骤 1/4] 安装/升级依赖...
+python -m pip install --upgrade pip >nul
+python -m pip install --quiet -r requirements.txt pillow pyinstaller
+if errorlevel 1 (
+    echo [错误] 依赖安装失败，请检查网络或手动执行：
+    echo        python -m pip install -r requirements.txt pillow pyinstaller
+    exit /b 1
 )
 echo [OK] 依赖已就绪
 
 :: ── 3. 生成图标 ──────────────────────────────────────────────
 echo [步骤 2/4] 生成图标...
 python resources\make_icon.py
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo [警告] 图标生成失败，将使用默认图标继续打包。
-    set ICON_ARG=
+    set "ICON_ARG="
 ) else (
-    set ICON_ARG=--icon "resources\app.ico"
+    set "ICON_ARG=--icon resources\\app.ico"
 )
 
 :: ── 4. 清理旧产物 ────────────────────────────────────────────
@@ -50,7 +51,7 @@ if exist "build\ATETest" (
 echo [步骤 4/4] 执行 PyInstaller...
 echo.
 
-pyinstaller ^
+python -m PyInstaller ^
     --noconfirm ^
     --onedir ^
     --windowed ^
@@ -63,9 +64,10 @@ pyinstaller ^
     --paths "." ^
     --hidden-import "PyQt5.sip" ^
     --hidden-import "yaml" ^
+    --hidden-import "openpyxl" ^
     main.py
 
-if %errorlevel% neq 0 goto :fail
+if errorlevel 1 goto :fail
 
 :: ── 6. 完成 ─────────────────────────────────────────────────
 echo.
