@@ -159,8 +159,8 @@ class ScriptSandbox:
                     errors="replace",
                     timeout=timeout if timeout > 0 else None,
                 )
-                captured_stdout = proc.stdout or ""
-                captured_stderr = proc.stderr or ""
+                # Combine stdout and stderr for better visibility in the UI
+                captured_stdout = (proc.stdout or "") + "\n" + (proc.stderr or "")
             except subprocess.TimeoutExpired:
                 return {
                     "value": None,

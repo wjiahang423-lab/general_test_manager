@@ -214,9 +214,9 @@ class TestRunner(QThread):
     # ------------------------------------------------------------------
 
     def _load_excel_loop(self, xlsx_path: str, sheet_name: str) -> list:
-        """从 xlsx 文件读取指定 sheet，返回 是否测试==是 的行列表。
-        每行以 {列名: 值} 字典表示；自动将 '测试项名称' 映射为 'name'。
-        仅依赖标准库（zipfile + xml.etree），无需 openpyxl/pandas。
+        """从 xlsx 文件读取指定 sheet，返回所有数据行（跳过空行）。
+        第一行作为列名，每行以 {列名: 值} 字典原样返回，不做过滤和列名映射。
+        测试脚本通过 params.get('列名') 自行取值。
         """
         import zipfile
         import xml.etree.ElementTree as ET
@@ -233,7 +233,6 @@ class TestRunner(QThread):
             return n - 1
 
         with zipfile.ZipFile(xlsx_path) as zf:
-            # shared strings
             try:
                 ss_xml = ET.fromstring(zf.read("xl/sharedStrings.xml"))
                 shared = [
@@ -243,30 +242,30 @@ class TestRunner(QThread):
             except Exception:
                 shared = []
 
-            # workbook → 找目标 sheet 路径
             wb_xml  = ET.fromstring(zf.read("xl/workbook.xml"))
             wb_rels = ET.fromstring(zf.read("xl/_rels/workbook.xml.rels"))
-            rid_map = {
-                r.get(f"{{{NS_R}}}id", r.get("Id")): r.get("Target")
-                for r in wb_rels
-            }
+            rid_map = {r.get("Id"): r.get("Target") for r in wb_rels}
+
             ws_path = None
             for s in wb_xml.iter(f"{{{NS}}}sheet"):
                 if s.get("name") == sheet_name:
                     rid     = s.get(f"{{{NS_R}}}id", s.get("r:id"))
                     target  = rid_map.get(rid, "")
-                    ws_path = f"xl/{target}" if not target.startswith("xl/") else target
+                    ws_path = target if target.startswith("xl/") else f"xl/{target}"
                     break
             if ws_path is None or ws_path not in zf.namelist():
-                raise ValueError(f"Sheet '{sheet_name}' 未在 {xlsx_path} 中找到")
+                available = [s.get("name") for s in wb_xml.iter(f"{{{NS}}}sheet")]
+                raise ValueError(
+                    f"Sheet '{sheet_name}' 未在 {xlsx_path} 中找到，"
+                    f"可用 Sheet: {available}"
+                )
 
             ws_xml   = ET.fromstring(zf.read(ws_path))
             all_rows = []
             for row_el in ws_xml.iter(f"{{{NS}}}row"):
                 cells = {}
                 for c in row_el:
-                    ref  = c.get("r", "")
-                    cidx = _col_idx(ref)
+                    cidx = _col_idx(c.get("r", ""))
                     t    = c.get("t", "")
                     v_el = c.find(f"{{{NS}}}v")
                     if v_el is None:
@@ -278,8 +277,7 @@ class TestRunner(QThread):
                     else:
                         try:
                             val = float(v_el.text)
-                            if val == int(val):
-                                val = int(val)
+                            val = int(val) if val == int(val) else val
                         except Exception:
                             val = v_el.text
                     cells[cidx] = val
@@ -290,15 +288,35 @@ class TestRunner(QThread):
         if not all_rows:
             return []
 
-        headers = [str(c) if c is not None else "" for c in all_rows[0]]
-        items   = []
+        # Excel 列名 → 脚本兼容键名（同时保留原始列名，脚本用哪个都能取到）
+        _COMPAT = {
+            "Variable Name":    "var_name",
+            "Length":           "length",
+            "Expected Value":   "expected",
+            "Expected Value Int": "expected_int",
+            "Min Value":        "min",
+            "Max Value":        "max",
+            "DID Name":         "did_name",
+            "Unit":             "unit",
+            "Test Data Name":   "name",
+            "Switch Variable":  "switch_var",
+        }
+
+        headers = [str(c).strip() if c is not None else f"col_{i}"
+                   for i, c in enumerate(all_rows[0])]
+        items = []
         for row in all_rows[1:]:
-            d = {h: (row[i] if i < len(row) else None) for i, h in enumerate(headers)}
-            if str(d.get("是否测试", "")).strip() != "是":
+            if all(v is None for v in row):
                 continue
-            # runner 用 'name' 字段作步骤显示名
-            if "name" not in d:
-                d["name"] = d.get("测试项名称") or d.get("pin") or ""
+            d = {h: (row[i] if i < len(row) else None)
+                 for i, h in enumerate(headers)}
+            # 同时注入兼容键名（不覆盖已有同名键）
+            for excel_col, compat_key in _COMPAT.items():
+                if excel_col in d and compat_key not in d:
+                    d[compat_key] = d[excel_col]
+            # runner 用 'name' 字段作步骤显示名，取第一列作为默认值
+            if not d.get("name"):
+                d["name"] = str(row[0]) if row and row[0] is not None else ""
             items.append(d)
         return items
 

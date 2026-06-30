@@ -21,38 +21,18 @@ from _session import get_session
 
 
 def measure(params: dict) -> dict:
-    var_name   = params.get("var_name", "")
-    switch_var = params.get("switch_var") or params.get("Switch Variable")
-    length     = int(params.get("length", 4))
-    item_name  = params.get("name", var_name)
+    var_name = params.get("var_name", "")
+    length = int(params.get("length", 4))
+    item_name = params.get("name", var_name)
+    time.sleep(1)
     try:
         config, xcp, a2l = get_session()
-
-        # 触发：写 switch_var 1→0 脉冲（对应 demo TRIGFIRELOOP）
-        # ECU 在 1→0 下降沿触发测量并锁存结果，不能持续保持 1
-        if switch_var and switch_var in a2l:
-            if not xcp.xcp_ff():
-                return {"value": None, "unit": "Ω", "pass": False,
-                        "message": f"{item_name}: switch FF 失败"}
-            if not xcp.xcp_eb():
-                return {"value": None, "unit": "Ω", "pass": False,
-                        "message": f"{item_name}: switch EB 失败"}
-            # write 1（触发）
-            xcp.xcp_f6(switch_var, a2l, 0)
-            xcp.xcp_f0("01")
-            # 紧跟写 0（复位），无需新的 FF/EB，XCP session 仍有效
-            xcp.xcp_f6(switch_var, a2l, 0)
-            xcp.xcp_f0("00")
-            time.sleep(0.5)  # 等待 ECU 完成测量并锁存结果
-
-        # 读取阻值
         result_hex = xcp.read_variable(
             variable_name=var_name,
             a2l_dic=a2l,
             offset=0,
             length=length,
         )
-
         if result_hex is None:
             return {"value": None, "unit": "Ω", "pass": False,
                     "message": f"{item_name}: 读取失败（返回 None）"}
@@ -63,7 +43,7 @@ def measure(params: dict) -> dict:
         return {
             "value": round(resistance, 4),
             "unit": "Ω",
-            "pass": True,
+            "pass": True,   # 数值范围由 step limits 判断
             "message": f"{item_name}: {resistance:.4f} Ω",
         }
     except Exception as exc:

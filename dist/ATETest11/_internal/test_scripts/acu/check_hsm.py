@@ -6,7 +6,6 @@ check_hsm.py — HSM 开启检测
 
 import sys
 import os
-import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -14,23 +13,15 @@ from _session import get_session
 
 
 def measure(params: dict) -> dict:
-    expected   = "01"
-    max_retry  = 5
-    retry_interval = 2.0   # 秒
     try:
         config, xcp, a2l = get_session()
-        result_hex = None
-        for attempt in range(max_retry):
-            result_hex = xcp.read_variable(
-                variable_name="ACU_HSM_Status",
-                a2l_dic=a2l,
-                offset=0,
-                length=1,
-            )
-            if result_hex == expected:
-                break
-            if attempt < max_retry - 1:
-                time.sleep(retry_interval)
+        result_hex = xcp.read_variable(
+            variable_name="ACU_HSM_Status",
+            a2l_dic=a2l,
+            offset=0,
+            length=1,
+        )
+        expected = "01"
         passed = result_hex == expected
         return {
             "value": result_hex,
@@ -40,5 +31,3 @@ def measure(params: dict) -> dict:
         }
     except Exception as exc:
         return {"value": None, "unit": "", "pass": False, "message": str(exc)}
-    
-

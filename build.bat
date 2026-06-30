@@ -6,6 +6,8 @@ echo.
 echo ============================================================
 echo   通用测试管理工具  --  打包脚本
 echo ============================================================
+echo   说明：仅打包测试管理程序主体
+echo     测试计划/测试脚本独立管理，使用者可在程序运行时添加
 echo.
 
 :: ── 1. 检查 Python ──────────────────────────────────────────
@@ -53,18 +55,14 @@ echo.
 
 python -m PyInstaller ^
     --noconfirm ^
-    --onedir ^
     --windowed ^
     --name "ATETest" ^
     %ICON_ARG% ^
-    --add-data "resources;resources" ^
-    --add-data "test_plans;test_plans" ^
-    --add-data "test_scripts;test_scripts" ^
-    --add-data "reports;reports" ^
-    --paths "." ^
     --hidden-import "PyQt5.sip" ^
     --hidden-import "yaml" ^
     --hidden-import "openpyxl" ^
+    --hidden-import "pyserial" ^
+    --hidden-import "serial" ^
     main.py
 
 if errorlevel 1 goto :fail
